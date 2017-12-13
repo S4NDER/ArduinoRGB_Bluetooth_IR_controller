@@ -1,4 +1,23 @@
 #pragma once
+#define OFF set_color (0, 0, 0)
+#define RED set_color(255, 0, 0)
+#define GREEN set_color(0, 255, 0)
+#define BLUE set_color(0, 0, 255)
+#define WHITE set_color(255, 255, 255)
+#define ORANGE set_color(255, 165, 0)
+#define DARK_YELLOW set_color(204, 204, 0)
+#define YELLOW set_color(255, 255, 0)
+#define STRAW_YELLOW set_color(204, 230, 0)
+
+#define PEA_GREEN set_color(0, 255, 127)
+#define CYAN set_color(0, 255, 255)
+#define LIGHT_BLUE set_color(173, 216, 230)
+#define SKY_BLUE set_color(0, 191, 255)
+
+#define DARK_BLUE set_color(0, 0, 139)
+#define DARK_PINK set_color(199, 21, 133)
+#define PINK set_color(255, 20, 147)
+#define PURPLE set_color(128, 0, 128)
 
 class Color {
 private:
@@ -20,8 +39,4 @@ private:
     void set_red(unsigned char red);
     void set_green(unsigned char green);
     void set_blue(unsigned char blue);
-
-    unsigned char pin_red = 2;
-    unsigned char pin_green = 3;
-    unsigned char pin_blue = 4;
 };

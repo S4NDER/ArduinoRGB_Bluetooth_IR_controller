@@ -4,21 +4,22 @@
 #define COMMON_ANODE
 
 LEDController::LEDController (void){
-    pinMode(pin_red, OUTPUT);
-    pinMode(pin_green, OUTPUT);
-    pinMode(pin_green, OUTPUT);
+    pinMode(PIN_RED, OUTPUT);
+    pinMode(PIN_GREEN, OUTPUT);
+    pinMode(PIN_BLUE, OUTPUT);
 }
 
 void LEDController::set_led(Color color){
     #ifdef COMMON_ANODE
-        unsigned char red = 255 -  map(color.get_red(), 0, 255, 0, 255);
-        unsigned char green = 255 -  map(color.get_green(), 0, 255, 0, 255);
-        unsigned char blue = 255 - map(color.get_blue(), 0, 255, 0, 255);
+    //map(...) is used for PWM because otherwise off = x < 128 and on = x > 128
+        unsigned char red = MAX_SCALE    - map(color.get_red(), MIN_SCALE, MAX_SCALE, MIN_SCALE, MAX_SCALE);
+        unsigned char green = MAX_SCALE  - map(color.get_green(), MIN_SCALE, MAX_SCALE, MIN_SCALE, MAX_SCALE);
+        unsigned char blue = MAX_SCALE   - map(color.get_blue(), MIN_SCALE, MAX_SCALE, MIN_SCALE, MAX_SCALE);
     #endif
 
-    analogWrite(pin_red, red);
-    analogWrite(pin_green, green);
-    analogWrite(pin_blue, blue);
+    analogWrite(PIN_RED, red);
+    analogWrite(PIN_GREEN, green);
+    analogWrite(PIN_BLUE, blue);
 
         Serial.print("RGB(");
         Serial.print(color.get_red());

@@ -1,14 +1,14 @@
 #pragma once
 #include "Color.h"
 
+#define MIN_SCALE 0
+#define MAX_SCALE 255
+
+#define PIN_RED 3
+#define PIN_GREEN 5
+#define PIN_BLUE 6
+
 class LEDController {
-private:
-    unsigned char pin_red = 3;
-    unsigned char pin_green = 5;
-    unsigned char pin_blue = 6;
-
-    Color color;
-
 public:
     LEDController (void);
     void set_led(Color color);

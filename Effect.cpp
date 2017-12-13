@@ -1,20 +1,30 @@
+#include <StaticThreadController.h>
+#include <Thread.h>
+#include <ThreadController.h>
+
 #include "Effect.h"
 #include "Arduino.h"
+
+#define RED Color(255,0,0)
+#define GREEN Color(0,255,0)
+#define BLUE Color(0,0,255)
+#define OFF Color(0,0,0)
 
 Effect::Effect(void){
 
 }
 
-void Effect::flash (Color color){
-    Color color_temp = color;
-    color_temp.set_color(0,0,0);
-    delay(500);
-    color_temp.set_color(color.get_red(), color.get_green(), color.get_blue());
-    controller.set_led(color_temp);
+void Effect::flash (Color color, unsigned short int delaytime){
+    controller.set_led(color);
+    delay(delaytime);
+    controller.set_led(OFF);
+    delay(delaytime);
+    controller.set_led(color);
+    delay(delaytime);
 }
 
 void Effect::normalize_to_color(Color color_temp, Color color_to_normalize_to, unsigned short int delaytime){
-    unsigned char temp_red = color_temp.get_red();
+  unsigned char temp_red = color_temp.get_red();
     unsigned char temp_green = color_temp.get_green();
     unsigned char temp_blue = color_temp.get_blue();
 
@@ -49,33 +59,19 @@ void Effect::normalize_to_color(Color color_temp, Color color_to_normalize_to, u
         }
 
         color_temp.set_color(temp_red, temp_green, temp_blue);
-        /*
-        Serial.print("RGB(");
-        Serial.print(temp_red);
-        Serial.print(", ");
-        Serial.print(temp_green);
-        Serial.print(", ");
-        Serial.print(temp_blue);
-        Serial.print(")");
-
-        Serial.print("    doneRGB(");
-        Serial.print(done_red);
-        Serial.print(", ");
-        Serial.print(done_green);
-        Serial.print(", ");
-        Serial.print(done_blue);
-        Serial.print(")");
-        Serial.print("\r\n");
-        */
-
         delay(delaytime);
         controller.set_led(color_temp);
    }
+
 }
 
-void Effect::cycle_rgb(void){
-    normalize_to_color(Color(0,0,0), Color(255,0,0),5);
-    normalize_to_color(Color(255,0,0), Color(0,255,0),5);
-    normalize_to_color(Color(0,255,0), Color(0,0,255),5);
-    normalize_to_color(Color(0,0,255), Color(0,0,0),5);
+void Effect::cycle_rgb(unsigned short int delaytime){
+    normalize_to_color(OFF, RED,delaytime);
+    normalize_to_color(RED, GREEN,delaytime);
+    normalize_to_color(GREEN, BLUE,delaytime);
+    normalize_to_color(BLUE, OFF,delaytime);
+}
+
+void Effect::cycly_rgb(void){
+  cycle_rgb(5);
 }

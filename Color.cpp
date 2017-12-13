@@ -4,7 +4,7 @@
 #define COMMON_ANODE
 
 Color::Color (void){
-    set_color(0,0,0);
+    set_color(255,0,0);
 }
 
 Color::Color (unsigned char red, unsigned char green, unsigned char blue){
