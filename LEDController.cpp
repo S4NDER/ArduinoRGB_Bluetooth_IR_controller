@@ -20,13 +20,4 @@ void LEDController::set_led(Color color){
     analogWrite(PIN_RED, red);
     analogWrite(PIN_GREEN, green);
     analogWrite(PIN_BLUE, blue);
-
-        Serial.print("RGB(");
-        Serial.print(color.get_red());
-        Serial.print(", ");
-        Serial.print(color.get_green());
-        Serial.print(", ");
-        Serial.print(color.get_blue());
-        Serial.print(")\r\n");
-
 }

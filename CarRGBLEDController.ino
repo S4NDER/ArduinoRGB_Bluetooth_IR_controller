@@ -2,6 +2,8 @@
 #include <Thread.h>
 #include <ThreadController.h>
 
+#include <SoftwareSerial.h>
+
 #include <IRLibDecodeBase.h>
 #include <IRLib_P01_NEC.h>
 #include <IRLibCombo.h>
@@ -57,6 +59,7 @@ ThreadController th_controller;
 
 Thread read_ir_thread = Thread();
 Thread process_ir_thread = Thread();
+Thread th_listen_to_BT = Thread();
 unsigned long last_value = IR_RED;
 unsigned long live_IR_value = IR_RED;
 
@@ -65,6 +68,8 @@ IRrecvPCI myReceiver(2);
 
 //Create a decoder object
 IRdecode myDecoder;
+
+SoftwareSerial BT(11, 12); // TX, RX
 
 void setup() {
 rgb_red_done = false;
@@ -84,18 +89,37 @@ rgb_blue_done = false;
     process_ir_thread.enabled = true; // Default enabled value is true
     process_ir_thread.setInterval(10); // Setts the wanted interval to be 10ms
     process_ir_thread.onRun(execute_IR_commands); // callback_function is the name of the function
+
+    th_listen_to_BT.enabled = true; // Default enabled value is true
+    th_listen_to_BT.setInterval(10); // Setts the wanted interval to be 10ms
+    th_listen_to_BT.onRun(listen_to_BT); // callback_function is the name of the function
 }
 
 void loop() {
   if(read_ir_thread.shouldRun()){
   // Yes, the Thread should be runned, let's run it
   read_ir_thread.run();
+  }
+  
+  if(process_ir_thread.shouldRun()){
+    // Yes, the Thread should be runned, let's run it
+    process_ir_thread.run();
+  }
+  
+  if(th_listen_to_BT.shouldRun()){
+    // Yes, the Thread should be runned, let's run it
+    th_listen_to_BT.run();
+  }
 }
 
-if(process_ir_thread.shouldRun()){
-  // Yes, the Thread should be runned, let's run it
-  process_ir_thread.run();
-}
+void listen_to_BT(){
+  if (Serial.available()) // Read user input if available.
+  {
+    String data = Serial.readString();
+    Serial.println(data);
+    delay(10); // The DELAY!  ********** VERY IMPORTANT *******
+    BT.write(Serial.read());
+ }
 }
 
 void listen_to_IR(){
@@ -256,7 +280,6 @@ void execute_IR_commands(){
               rgb_red_done = true;
               rgb_green_done = false;
             } else{
-              Serial.print("RED");
               effect.normalize_to_color(Color(rgb_red, rgb_green, rgb_blue),Color((rgb_red+1),(rgb_green),(rgb_blue)),2);
               rgb_red ++;
               rgb_green_done = true;
@@ -270,7 +293,6 @@ void execute_IR_commands(){
               rgb_green_done = true;
               rgb_blue_done = false;
             } else{
-              Serial.print("GREEN");
               effect.normalize_to_color(Color(rgb_red, rgb_green, rgb_blue),Color((rgb_red),(rgb_green+1),(rgb_blue)),2);
               rgb_green ++;
               rgb_red --;
@@ -280,10 +302,8 @@ void execute_IR_commands(){
   
           if(!rgb_blue_done){
             if(rgb_blue == 255){
-              Serial.print("BLUE DONE");
               rgb_blue_done = true;
             } else{
-              Serial.print("BLUE");
               effect.normalize_to_color(Color(rgb_red, rgb_green, rgb_blue),Color((rgb_red),(rgb_green),(rgb_blue+1)),2);
               rgb_blue ++;
               rgb_green --;
@@ -292,17 +312,12 @@ void execute_IR_commands(){
 
           if(rgb_red_done & rgb_green_done & rgb_blue_done){
             if(rgb_blue == 0){
-              Serial.print("RESET");
-              rgb_red = 0;
-              rgb_green = 0;
-              rgb_blue = 0;
               rgb_red_done = false;
-              rgb_green_done = true;
-              rgb_blue_done = true;
             } else {
               effect.normalize_to_color(Color(rgb_red, rgb_green, rgb_blue),Color((rgb_red),(rgb_green),(rgb_blue-1)),2);
               rgb_blue --;
             }
           }
+          color.set_color(rgb_red,rgb_green, rgb_blue);
         }
 }
