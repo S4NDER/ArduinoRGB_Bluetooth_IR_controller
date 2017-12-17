@@ -46,6 +46,13 @@ Color last_color;
 Effect effect;
 LEDController controller;
 
+unsigned char rgb_red = 0;
+unsigned char rgb_green = 0; 
+unsigned char rgb_blue = 0;
+bool rgb_red_done = false;
+bool rgb_green_done = false;
+bool rgb_blue_done = false;
+
 ThreadController th_controller;
 
 Thread read_ir_thread = Thread();
@@ -60,6 +67,10 @@ IRrecvPCI myReceiver(2);
 IRdecode myDecoder;
 
 void setup() {
+rgb_red_done = false;
+rgb_green_done = false;
+rgb_blue_done = false;
+  pinMode(LED_BUILTIN, OUTPUT);
     // put your setup code here, to run once:
     Serial.begin(9600);
     delay(2000); while (!Serial); //delay for Leonardo
@@ -71,7 +82,7 @@ void setup() {
     read_ir_thread.onRun(listen_to_IR); // callback_function is the name of the function
 
     process_ir_thread.enabled = true; // Default enabled value is true
-    process_ir_thread.setInterval(3); // Setts the wanted interval to be 10ms
+    process_ir_thread.setInterval(10); // Setts the wanted interval to be 10ms
     process_ir_thread.onRun(execute_IR_commands); // callback_function is the name of the function
 }
 
@@ -85,17 +96,19 @@ if(process_ir_thread.shouldRun()){
   // Yes, the Thread should be runned, let's run it
   process_ir_thread.run();
 }
- 
 }
 
 void listen_to_IR(){
     if (myReceiver.getResults()) {
         myDecoder.decode();           //Decode it
         live_IR_value = myDecoder.value;
+        digitalWrite(LED_BUILTIN, HIGH);   // turn the LED on (HIGH is the voltage level)
+        delay(200);                       // wait for a second
+        digitalWrite(LED_BUILTIN, LOW);    // turn the LED off by making the voltage LOW              
         
          Serial.print(last_value);
          Serial.print("\r\n");
-  Serial.print(live_IR_value);
+         Serial.print(live_IR_value);
         myReceiver.enableIRIn();      //Restart receiver
     }
     
@@ -222,17 +235,74 @@ void execute_IR_commands(){
                 break;
 
             case IR_FADE:
-                last_value = IR_FADE;
+                last_value = IR_FADE;               
                 break;
             /*
             case IR_SMOOTH:
                 break;*/
+        }
+        if(live_IR_value != IR_FADE){
+            rgb_red = 0;
+            rgb_green = 0;
+            rgb_blue = 0;
         }
         
         if(live_IR_value == IR_STROBE){
             effect.flash(color, 200);
         }
         if(last_value == IR_FADE){
-            effect.cycle_rgb(5);
+          if(!rgb_red_done){
+            if(rgb_red == 255){
+              rgb_red_done = true;
+              rgb_green_done = false;
+            } else{
+              Serial.print("RED");
+              effect.normalize_to_color(Color(rgb_red, rgb_green, rgb_blue),Color((rgb_red+1),(rgb_green),(rgb_blue)),2);
+              rgb_red ++;
+              rgb_green_done = true;
+              rgb_blue_done = true;
+            }
+          }
+          
+  
+          if(!rgb_green_done){
+            if(rgb_green == 255){
+              rgb_green_done = true;
+              rgb_blue_done = false;
+            } else{
+              Serial.print("GREEN");
+              effect.normalize_to_color(Color(rgb_red, rgb_green, rgb_blue),Color((rgb_red),(rgb_green+1),(rgb_blue)),2);
+              rgb_green ++;
+              rgb_red --;
+              rgb_blue_done = true;
+            }
+          }
+  
+          if(!rgb_blue_done){
+            if(rgb_blue == 255){
+              Serial.print("BLUE DONE");
+              rgb_blue_done = true;
+            } else{
+              Serial.print("BLUE");
+              effect.normalize_to_color(Color(rgb_red, rgb_green, rgb_blue),Color((rgb_red),(rgb_green),(rgb_blue+1)),2);
+              rgb_blue ++;
+              rgb_green --;
+            }
+          }
+
+          if(rgb_red_done & rgb_green_done & rgb_blue_done){
+            if(rgb_blue == 0){
+              Serial.print("RESET");
+              rgb_red = 0;
+              rgb_green = 0;
+              rgb_blue = 0;
+              rgb_red_done = false;
+              rgb_green_done = true;
+              rgb_blue_done = true;
+            } else {
+              effect.normalize_to_color(Color(rgb_red, rgb_green, rgb_blue),Color((rgb_red),(rgb_green),(rgb_blue-1)),2);
+              rgb_blue --;
+            }
+          }
         }
 }

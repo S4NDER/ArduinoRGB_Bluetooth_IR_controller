@@ -1,7 +1,3 @@
-#include <StaticThreadController.h>
-#include <Thread.h>
-#include <ThreadController.h>
-
 #include "Effect.h"
 #include "Arduino.h"
 
@@ -9,6 +5,8 @@
 #define GREEN Color(0,255,0)
 #define BLUE Color(0,0,255)
 #define OFF Color(0,0,0)
+
+
 
 Effect::Effect(void){
 
@@ -18,8 +16,6 @@ void Effect::flash (Color color, unsigned short int delaytime){
     controller.set_led(color);
     delay(delaytime);
     controller.set_led(OFF);
-    delay(delaytime);
-    controller.set_led(color);
     delay(delaytime);
 }
 
