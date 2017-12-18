@@ -70,8 +70,9 @@ IRrecvPCI myReceiver(2);
 
 //Create a decoder object
 IRdecode myDecoder;
+String command = ""; // Stores response of bluetooth device
 
-SoftwareSerial BT(11, 12); // TX, RX
+SoftwareSerial BT(11, 12); // RX, TX
 
 void setup() {
 rgb_red_done = false;
@@ -79,6 +80,7 @@ rgb_green_done = false;
 rgb_blue_done = false;
   pinMode(LED_BUILTIN, OUTPUT);
     // put your setup code here, to run once:
+    BT.begin(9600);
     Serial.begin(9600);
     delay(2000); while (!Serial); //delay for Leonardo
     myReceiver.enableIRIn(); // Start the receiver
@@ -115,21 +117,28 @@ void loop() {
 }
 
 void listen_to_BT(){
-  if (Serial.available()) // Read user input if available.
+if (BT.available ()) // receive data if available.
   {
-    String received_data = Serial.readString();
-    char data[256];
-    char *ptr;
-
-    for(int i = 0; i <= received_data.length(); i++){
-      data[i] = received_data[i];
+    while (BT.available ()) // "keep receiving".
+    {
+      delay (10); // Delay added to make thing stable
+      char c = BT.read (); // Conduct serial read
+      command += c; // Build the string.
     }
-    Serial.println(data);
+
+
+    char data[256];    
+    for(int i = 0; i < command.length(); i++){
+      data[i] = command[i];
+    }
     sscanf(data,"%lX", &live_IR_value); // string to long
-    Serial.println(live_IR_value);
-    delay(10); // The DELAY!  ********** VERY IMPORTANT *******
-    BT.write(Serial.read());
- }
+    command = ""; // No repeats
+  }
+  if (Serial.available ())
+  {
+    delay (10);
+    BT.write (Serial.read ());
+  }
 }
 
 void listen_to_IR(){
