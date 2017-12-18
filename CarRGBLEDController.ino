@@ -4,6 +4,8 @@
 
 #include <SoftwareSerial.h>
 
+#include <stdlib.h>
+
 #include <IRLibDecodeBase.h>
 #include <IRLib_P01_NEC.h>
 #include <IRLibCombo.h>
@@ -115,8 +117,16 @@ void loop() {
 void listen_to_BT(){
   if (Serial.available()) // Read user input if available.
   {
-    String data = Serial.readString();
+    String received_data = Serial.readString();
+    char data[256];
+    char *ptr;
+
+    for(int i = 0; i <= received_data.length(); i++){
+      data[i] = received_data[i];
+    }
     Serial.println(data);
+    sscanf(data,"%lX", &live_IR_value); // string to long
+    Serial.println(live_IR_value);
     delay(10); // The DELAY!  ********** VERY IMPORTANT *******
     BT.write(Serial.read());
  }
