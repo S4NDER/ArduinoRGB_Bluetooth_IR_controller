@@ -17,6 +17,8 @@
 #include "Effect.h"
 #include "LEDController.h"
 
+#define BT_COMMAND 1
+
 #define IR_BRIGHT_UP  0xF700FF
 #define IR_BRIGHT_DOWN 0xF7807F
 #define IR_OFF 0xF740BF
@@ -55,6 +57,12 @@ LEDController controller;
 unsigned char rgb_red = 0;
 unsigned char rgb_green = 0;
 unsigned char rgb_blue = 0;
+
+unsigned char bt_red = 0;
+unsigned char bt_green = 0;
+unsigned char bt_blue = 0;
+unsigned short int bt_delay = 0;
+
 bool rgb_red_done = false;
 bool rgb_green_done = false;
 bool rgb_blue_done = false;
@@ -65,7 +73,7 @@ Thread th_listen_to_BT = Thread();
 unsigned long last_value = IR_RED;
 unsigned long live_IR_value = IR_RED;
 
-StaticJsonBuffer<512> jsonBuffer;
+StaticJsonBuffer<320> jsonBuffer;
 
 //Create a receiver object to listen on pin 2
 IRrecvPCI myReceiver(2);
@@ -116,28 +124,30 @@ void loop() {
 void listen_to_BT(){
     if (BT.available ()) // receive data if available.
     {
-      char data[] = "{\"red\": 10,\"green\": 20,\"blue\": 30,\"delay\": 5,\"ir_val\": \"0xF7C837\"}";
+      //char data[] = "{\"red\": 10,\"green\": 20,\"blue\": 30,\"delay\": 5,\"ir_val\": \"0xF7C837\"}";
         while (BT.available ()) // "keep receiving".
         {
             delay (10); // Delay added to make thing stable
             char c = BT.read (); // Conduct serial read
             command += c; // Build the string.
         }
+        Serial.println(command);
+        char data[315];
         //char data[512];
-        //for(int i = 0; i < command.length(); i++){
-        //    data[i] = command[i];
-        //}
-        Serial.print(data);
+        for(int i = 0; i < command.length(); i++){
+            data[i] = command[i];
+        }
+        //Serial.print(data);
         
 
 
 
         JsonObject& root = jsonBuffer.parseObject(data);
 
-        unsigned char bt_red = root["red"];
-        unsigned char bt_green = root["green"];
-        unsigned char bt_blue = root["blue"];
-        unsigned short int bt_delay = root["delay"];
+        bt_red = root["red"];
+        bt_green = root["green"];
+        bt_blue = root["blue"];
+        bt_delay = root["delay"];
         String bt_ir_val = root["ir_val"];
 
         Serial.println(bt_red);
@@ -149,7 +159,12 @@ void listen_to_BT(){
         for(int i = 0; i < bt_ir_val.length(); i++){
             bt_data[i] = bt_ir_val[i];
         }
-        sscanf(bt_data,"%lX", &live_IR_value); // string to long
+        if(bt_ir_val.length() > 3){
+          sscanf(bt_data,"%lX", &live_IR_value); // string to long
+        } else {
+          live_IR_value = BT_COMMAND;
+        }
+        
         Serial.println(live_IR_value);
  
 
@@ -304,6 +319,14 @@ void execute_IR_commands(){
         /*
         case IR_SMOOTH:
         break;*/
+
+        case BT_COMMAND:
+        color.set_color(bt_red, bt_green, bt_blue);
+        last_color.set_color(bt_red, bt_green, bt_blue);
+        controller.set_led(color);
+        last_value = BT_COMMAND;
+        break; 
+        
     }
     if(live_IR_value != IR_FADE){
         rgb_red = 0;
