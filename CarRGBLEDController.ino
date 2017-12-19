@@ -85,6 +85,7 @@ String command = ""; // Stores response of bluetooth device
 SoftwareSerial BT(11, 12); // RX, TX
 
 void setup() {
+    controller.set_led(color);
     rgb_red_done = false;
     rgb_green_done = false;
     rgb_blue_done = false;
@@ -95,7 +96,7 @@ void setup() {
     delay(2000); while (!Serial); //delay for Leonardo
     myReceiver.enableIRIn(); // Start the receiver
     Serial.println(F("Ready to receive IR signals"));
-    controller.set_led(color);
+    
 
     read_ir_thread.setInterval(2); // Setts the wanted interval to be 10ms
     read_ir_thread.onRun(listen_to_IR); // callback_function is the name of the function
@@ -137,11 +138,7 @@ void listen_to_BT(){
         for(int i = 0; i < command.length(); i++){
             data[i] = command[i];
         }
-        //Serial.print(data);
         
-
-
-
         JsonObject& root = jsonBuffer.parseObject(data);
 
         bt_red = root["red"];
@@ -153,8 +150,6 @@ void listen_to_BT(){
         Serial.println(bt_red);
         Serial.println(bt_green);
         Serial.println(bt_blue);
-        Serial.println(bt_delay);
-        Serial.println(bt_ir_val);
         char bt_data[128];
         for(int i = 0; i < bt_ir_val.length(); i++){
             bt_data[i] = bt_ir_val[i];
@@ -164,7 +159,7 @@ void listen_to_BT(){
         } else {
           live_IR_value = BT_COMMAND;
         }
-        
+        jsonBuffer.clear();
         Serial.println(live_IR_value);
  
 
@@ -184,10 +179,6 @@ void listen_to_IR(){
         digitalWrite(LED_BUILTIN, HIGH);   // turn the LED on (HIGH is the voltage level)
         delay(200);                       // wait for a second
         digitalWrite(LED_BUILTIN, LOW);    // turn the LED off by making the voltage LOW
-
-        Serial.print(last_value);
-        Serial.print("\r\n");
-        Serial.print(live_IR_value);
         myReceiver.enableIRIn();      //Restart receiver
     }
 
