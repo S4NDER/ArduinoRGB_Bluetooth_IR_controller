@@ -18,11 +18,56 @@ void Effect::flash (Color color, unsigned short int delaytime){
     controller.set_led(OFF);
     delay(delaytime);
 }
+void Effect::bright_up(Color &color_temp){
+    if(color_temp.get_red()*1.1 <= 255){
+      temp_red = color_temp.get_red()*1.1;
+    }
+    if(color_temp.get_red() == 0){
+      temp_red = 0;
+    }
+    if(color_temp.get_green()*1.1 <= 255){
+      temp_green= color_temp.get_green()*1.1;
+    }
+    if(color_temp.get_green() == 0){
+      temp_green = 0;
+    }
+    if(color_temp.get_blue()*1.1 <= 255){
+      temp_blue = color_temp.get_blue()*1.1;
+    }
+    if(color_temp.get_blue() == 0){
+      temp_blue = 0;
+    }
+    color_temp.set_color(temp_red, temp_green, temp_blue);
+    controller.set_led(color_temp);
+}
+
+void Effect::bright_down(Color &color_temp){
+    if(color_temp.get_red()/1.1 > 5){
+      temp_red = color_temp.get_red()/1.1;
+    }
+    if(color_temp.get_red() == 0){
+      temp_red = 0;
+    }
+    if(color_temp.get_green()/1.1 > 5){
+      temp_green = color_temp.get_green()/1.1;
+    }
+    if(color_temp.get_green() == 0){
+      temp_green = 0;
+    }
+    if(color_temp.get_blue()/1.1 > 5){
+      temp_blue = color_temp.get_blue()/1.1;
+    }
+    if(color_temp.get_blue() == 0){
+      temp_blue = 0;
+    }
+    color_temp.set_color(temp_red, temp_green, temp_blue);
+    controller.set_led(color_temp);
+}
 
 void Effect::normalize_to_color(Color color_temp, Color color_to_normalize_to, unsigned short int delaytime){
-  unsigned char temp_red = color_temp.get_red();
-    unsigned char temp_green = color_temp.get_green();
-    unsigned char temp_blue = color_temp.get_blue();
+    temp_red = color_temp.get_red();
+    temp_green = color_temp.get_green();
+    temp_blue = color_temp.get_blue();
 
     bool done_red = false;
     bool done_green = false;

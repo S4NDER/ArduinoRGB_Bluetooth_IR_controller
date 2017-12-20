@@ -21,22 +21,22 @@
 
 class Color {
 private:
-    unsigned char red;
-    unsigned char green;
-    unsigned char blue;
+    float red;
+    float green;
+    float blue;
 
 public:
     Color (void);
-    Color (unsigned char red, unsigned char green, unsigned char blue);
+    Color (float red, float green, float blue);
 
-    void set_color (unsigned char red, unsigned char green, unsigned char blue);
+    void set_color (float red, float green, float blue);
 
-    unsigned char get_red(void);
-    unsigned char get_green(void);
-    unsigned char get_blue(void);
+    float get_red(void);
+    float get_green(void);
+    float get_blue(void);
 
 private:
-    void set_red(unsigned char red);
-    void set_green(unsigned char green);
-    void set_blue(unsigned char blue);
+    void set_red(float red);
+    void set_green(float green);
+    void set_blue(float blue);
 };

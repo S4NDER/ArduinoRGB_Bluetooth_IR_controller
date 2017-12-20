@@ -7,36 +7,36 @@ Color::Color (void){
     set_color(255,0,0);
 }
 
-Color::Color (unsigned char red, unsigned char green, unsigned char blue){
+Color::Color (float red, float green, float blue){
     set_color(red, green, blue);
 }
 
-void Color::set_color (unsigned char red, unsigned char green, unsigned char blue){
+void Color::set_color (float red, float green, float blue){
     set_red(red);
     set_green(green);
     set_blue(blue);
 }
 
-void Color::set_red(unsigned char red){
+void Color::set_red(float red){
     this->red = red;
 }
 
-void Color::set_green(unsigned char green){
+void Color::set_green(float green){
     this->green = green;
 }
 
-void Color::set_blue(unsigned char blue){
+void Color::set_blue(float blue){
     this->blue = blue;
 }
 
-unsigned char Color::get_red(void){
+float Color::get_red(void){
     return red;
 }
 
-unsigned char Color::get_green(void){
+float Color::get_green(void){
     return green;
 }
 
-unsigned char Color::get_blue(void){
+float Color::get_blue(void){
     return blue;
 }

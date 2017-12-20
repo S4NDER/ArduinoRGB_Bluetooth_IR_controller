@@ -58,6 +58,8 @@ unsigned char rgb_red = 0;
 unsigned char rgb_green = 0;
 unsigned char rgb_blue = 0;
 
+
+
 unsigned char bt_red = 0;
 unsigned char bt_green = 0;
 unsigned char bt_blue = 0;
@@ -89,23 +91,22 @@ void setup() {
     rgb_red_done = false;
     rgb_green_done = false;
     rgb_blue_done = false;
-    pinMode(LED_BUILTIN, OUTPUT);
-    // put your setup code here, to run once:
+    pinMode(LED_BUILTIN, OUTPUT); //Used for status LED
     BT.begin(9600);
     Serial.begin(9600);
-    delay(2000); while (!Serial); //delay for Leonardo
     myReceiver.enableIRIn(); // Start the receiver
     Serial.println(F("Ready to receive IR signals"));
     
 
-    read_ir_thread.setInterval(2); // Setts the wanted interval to be 10ms
-    read_ir_thread.onRun(listen_to_IR); // callback_function is the name of the function
+    //Setting timeintervals (ms) for threads
+    read_ir_thread.setInterval(2);
+    th_listen_to_BT.setInterval(10);
+    process_ir_thread.setInterval(10);
 
-    process_ir_thread.setInterval(10); // Setts the wanted interval to be 10ms
-    process_ir_thread.onRun(execute_IR_commands); // callback_function is the name of the function
-
-    th_listen_to_BT.setInterval(10); // Setts the wanted interval to be 10ms
-    th_listen_to_BT.onRun(listen_to_BT); // callback_function is the name of the function
+    //Function to run in the thread
+    read_ir_thread.onRun(listen_to_IR);
+    th_listen_to_BT.onRun(listen_to_BT);
+    process_ir_thread.onRun(execute_IR_commands);
 }
 
 void loop() {
@@ -282,11 +283,19 @@ void execute_IR_commands(){
         controller.set_led(color);
         last_value = IR_PURPLE;
         break;
-        /*
+        
         case IR_BRIGHT_UP :
+        live_IR_value = 0;
+        effect.bright_up(color);
+
         break;
+        
         case IR_BRIGHT_DOWN:
-        break;*/
+        live_IR_value = 0;
+        effect.bright_down(color);
+        
+        break;
+        
         case IR_OFF:
         color.OFF;
         controller.set_led(color);
@@ -295,10 +304,74 @@ void execute_IR_commands(){
         case IR_ON:
         controller.set_led(last_color);
         break;
-        /*
+        
         case IR_FLASH:
+        last_value = IR_FLASH;
+        color.WHITE;
+        last_color.WHITE;
+        controller.set_led(color);
+        delay(200);
+        color.RED;
+        last_color.RED;
+        controller.set_led(color);
+        delay(200);
+        color.GREEN;
+        last_color.GREEN;
+        controller.set_led(color);
+        delay(200);
+        color.BLUE;
+        last_color.BLUE;
+        controller.set_led(color);
+        delay(200);
+        color.ORANGE;
+        last_color.ORANGE;
+        controller.set_led(color);
+        delay(200);
+        color.DARK_YELLOW;
+        last_color.DARK_YELLOW;
+        controller.set_led(color);
+        delay(200);
+        color.YELLOW;
+        last_color.YELLOW;
+        controller.set_led(color);
+        delay(200);
+        color.STRAW_YELLOW;
+        last_color.STRAW_YELLOW;
+        controller.set_led(color);
+        delay(200);
+        color.PEA_GREEN;
+        last_color.PEA_GREEN;
+        controller.set_led(color);
+        delay(200);
+        color.CYAN;
+        last_color.CYAN;
+        controller.set_led(color);
+        delay(200);
+        color.LIGHT_BLUE;
+        last_color.LIGHT_BLUE;
+        controller.set_led(color);
+        delay(200);
+        color.SKY_BLUE;
+        last_color.SKY_BLUE;
+        controller.set_led(color);
+        delay(200);
+        color.DARK_BLUE;
+        last_color.DARK_BLUE;
+        controller.set_led(color);
+        delay(200);
+        color.DARK_PINK;
+        last_color.DARK_PINK;
+        controller.set_led(color);
+        delay(200);
+        color.PINK;
+        last_color.PINK;
+        controller.set_led(color);
+        delay(200);
+        color.PURPLE;
+        last_color.PURPLE;
+        controller.set_led(color);
+        delay(200);
         break;
-        */
         case IR_STROBE:
         effect.flash(color, 200);
         last_value = IR_STROBE;
@@ -307,9 +380,10 @@ void execute_IR_commands(){
         case IR_FADE:
         last_value = IR_FADE;
         break;
-        /*
+        
         case IR_SMOOTH:
-        break;*/
+        last_value = IR_SMOOTH;
+        break;
 
         case BT_COMMAND:
         color.set_color(bt_red, bt_green, bt_blue);
@@ -325,6 +399,17 @@ void execute_IR_commands(){
         rgb_blue = 0;
     }
 
+    if(last_value == IR_SMOOTH){
+      for(unsigned char i = 0; i < 25 ; i++){
+          effect.bright_down(color);
+          delay(30);
+      }
+      for(unsigned char i = 0; i < 25 ; i++){
+        effect.bright_up(color);
+        delay(30);
+      }
+    }
+    
     if(live_IR_value == IR_STROBE){
         effect.flash(color, 200);
     }

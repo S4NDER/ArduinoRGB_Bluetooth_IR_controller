@@ -12,9 +12,9 @@ LEDController::LEDController (void){
 void LEDController::set_led(Color color){
     #ifdef COMMON_ANODE
     //map(...) is used for PWM because otherwise off = x < 128 and on = x > 128
-        unsigned char red = MAX_SCALE    - map(color.get_red(), MIN_SCALE, MAX_SCALE, MIN_SCALE, MAX_SCALE);
-        unsigned char green = MAX_SCALE  - map(color.get_green(), MIN_SCALE, MAX_SCALE, MIN_SCALE, MAX_SCALE);
-        unsigned char blue = MAX_SCALE   - map(color.get_blue(), MIN_SCALE, MAX_SCALE, MIN_SCALE, MAX_SCALE);
+        float red = MAX_SCALE    - map(color.get_red(), MIN_SCALE, MAX_SCALE, MIN_SCALE, MAX_SCALE);
+        float green = MAX_SCALE  - map(color.get_green(), MIN_SCALE, MAX_SCALE, MIN_SCALE, MAX_SCALE);
+        float blue = MAX_SCALE   - map(color.get_blue(), MIN_SCALE, MAX_SCALE, MIN_SCALE, MAX_SCALE);
     #endif
 
     analogWrite(PIN_RED, red);
