@@ -58,8 +58,6 @@ unsigned char rgb_red = 0;
 unsigned char rgb_green = 0;
 unsigned char rgb_blue = 0;
 
-
-
 unsigned char bt_red = 0;
 unsigned char bt_green = 0;
 unsigned char bt_blue = 0;
@@ -88,9 +86,6 @@ SoftwareSerial BT(11, 12); // RX, TX
 
 void setup() {
     controller.set_led(color);
-    rgb_red_done = false;
-    rgb_green_done = false;
-    rgb_blue_done = false;
     pinMode(LED_BUILTIN, OUTPUT); //Used for status LED
     BT.begin(9600);
     Serial.begin(9600);
@@ -126,7 +121,6 @@ void loop() {
 void listen_to_BT(){
     if (BT.available ()) // receive data if available.
     {
-      //char data[] = "{\"red\": 10,\"green\": 20,\"blue\": 30,\"delay\": 5,\"ir_val\": \"0xF7C837\"}";
         while (BT.available ()) // "keep receiving".
         {
             delay (10); // Delay added to make thing stable
@@ -148,9 +142,6 @@ void listen_to_BT(){
         bt_delay = root["delay"];
         String bt_ir_val = root["ir_val"];
 
-        Serial.println(bt_red);
-        Serial.println(bt_green);
-        Serial.println(bt_blue);
         char bt_data[128];
         for(int i = 0; i < bt_ir_val.length(); i++){
             bt_data[i] = bt_ir_val[i];
@@ -161,8 +152,7 @@ void listen_to_BT(){
           live_IR_value = BT_COMMAND;
         }
         jsonBuffer.clear();
-        Serial.println(live_IR_value);
- 
+        blink_led(); 
 
         command = ""; // No repeats
     }
@@ -177,12 +167,16 @@ void listen_to_IR(){
     if (myReceiver.getResults()) {
         myDecoder.decode();           //Decode it
         live_IR_value = myDecoder.value;
-        digitalWrite(LED_BUILTIN, HIGH);   // turn the LED on (HIGH is the voltage level)
-        delay(200);                       // wait for a second
-        digitalWrite(LED_BUILTIN, LOW);    // turn the LED off by making the voltage LOW
+        blink_led();
         myReceiver.enableIRIn();      //Restart receiver
     }
 
+}
+
+void blink_led(){
+  digitalWrite(LED_BUILTIN, HIGH);   // turn the LED on (HIGH is the voltage level)
+  delay(200);                       // wait for a second
+  digitalWrite(LED_BUILTIN, LOW);    // turn the LED off by making the voltage LOW
 }
 
 void execute_IR_commands(){
@@ -193,90 +187,105 @@ void execute_IR_commands(){
         controller.set_led(color);
         last_value = IR_WHITE;
         break;
+        
         case IR_RED:
         color.RED;
         last_color.RED;
         controller.set_led(color);
         last_value = IR_RED;
         break;
+        
         case IR_GREEN:
         color.GREEN;
         last_color.GREEN;
         controller.set_led(color);
         last_value = IR_GREEN;
         break;
+        
         case IR_BLUE:
         color.BLUE;
         last_color.BLUE;
         controller.set_led(color);
         last_value = IR_BLUE;
         break;
+        
         case IR_ORANGE:
         color.ORANGE;
         last_color.ORANGE;
         controller.set_led(color);
         last_value = IR_ORANGE;
         break;
+        
         case IR_DARK_YELLOW:
         color.DARK_YELLOW;
         last_color.DARK_YELLOW;
         controller.set_led(color);
         last_value = IR_DARK_YELLOW;
         break;
+        
         case IR_YELLOW:
         color.YELLOW;
         last_color.YELLOW;
         controller.set_led(color);
         last_value = IR_YELLOW;
         break;
+        
         case IR_STRAW_YELLOW:
         color.STRAW_YELLOW;
         last_color.STRAW_YELLOW;
         controller.set_led(color);
         last_value = IR_STRAW_YELLOW;
         break;
+        
         case IR_PEA_GREEN:
         color.PEA_GREEN;
         last_color.PEA_GREEN;
         controller.set_led(color);
         last_value = IR_PEA_GREEN;
         break;
+        
         case IR_CYAN:
         color.CYAN;
         last_color.CYAN;
         controller.set_led(color);
         last_value = IR_CYAN;
         break;
+        
         case IR_LIGHT_BLUE:
         color.LIGHT_BLUE;
         last_color.LIGHT_BLUE;
         controller.set_led(color);
         last_value = IR_LIGHT_BLUE;
         break;
+        
         case IR_SKY_BLUE:
         color.SKY_BLUE;
         last_color.SKY_BLUE;
         controller.set_led(color);
         last_value = IR_SKY_BLUE;
         break;
+        
         case IR_DARK_BLUE:
         color.DARK_BLUE;
         last_color.DARK_BLUE;
         controller.set_led(color);
         last_value = IR_DARK_BLUE;
         break;
+        
         case IR_DARK_PINK:
         color.DARK_PINK;
         last_color.DARK_PINK;
         controller.set_led(color);
         last_value = IR_DARK_PINK;
         break;
+        
         case IR_PINK:
         color.PINK;
         last_color.PINK;
         controller.set_led(color);
         last_value = IR_PINK;
         break;
+        
         case IR_PURPLE :
         color.PURPLE;
         last_color.PURPLE;
@@ -287,13 +296,11 @@ void execute_IR_commands(){
         case IR_BRIGHT_UP :
         live_IR_value = 0;
         effect.bright_up(color);
-
         break;
         
         case IR_BRIGHT_DOWN:
         live_IR_value = 0;
         effect.bright_down(color);
-        
         break;
         
         case IR_OFF:
@@ -400,13 +407,14 @@ void execute_IR_commands(){
     }
 
     if(last_value == IR_SMOOTH){
-      for(unsigned char i = 0; i < 25 ; i++){
+      unsigned char i = 0;
+      for(i = 0; i < 25 ; i++){
           effect.bright_down(color);
-          delay(30);
+          delay(100);
       }
-      for(unsigned char i = 0; i < 25 ; i++){
-        effect.bright_up(color);
-        delay(30);
+      for(i = 25; i > 0 ; i--){
+          effect.bright_up(color);
+          delay(100);
       }
     }
     
