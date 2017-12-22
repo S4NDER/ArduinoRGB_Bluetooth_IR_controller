@@ -124,9 +124,16 @@ void listen_to_BT(){
     {
         while (BT.available ()) // "keep receiving".
         {
-            
             char c = BT.read (); // Conduct serial read
             command += c; // Build the string.
+
+            if((c =='{') & (command.length()> 1)){
+              command = "";
+            }
+
+            if(command.charAt(0) != '{'){
+              command = "";
+            }
             if(c == '}'){
               break;
             }
