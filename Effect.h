@@ -14,6 +14,7 @@ private:
 public:
     Effect (void);
 
+    void set_controller(LEDController &controller);
     void flash (Color color, unsigned short int delaytime);
     void normalize_to_color(Color color_temp, Color color_to_normalize_to, unsigned short int delaytime);
     void cycle_rgb(unsigned short int delaytime);

@@ -6,10 +6,12 @@
 #define BLUE Color(0,0,255)
 #define OFF Color(0,0,0)
 
-
-
 Effect::Effect(void){
+  
+}
 
+void Effect::set_controller(LEDController &controller){
+  this->controller = controller;
 }
 
 void Effect::flash (Color color, unsigned short int delaytime){
@@ -19,7 +21,11 @@ void Effect::flash (Color color, unsigned short int delaytime){
     delay(delaytime);
 }
 void Effect::bright_up(Color &color_temp){
-    if(color_temp.get_red()*1.1 <= 255){
+    temp_red = color_temp.get_red();
+    temp_green = color_temp.get_green();
+    temp_blue = color_temp.get_blue();
+
+    if(color_temp.get_red()*1.1 <= 255.00){
       temp_red = color_temp.get_red()*1.1;
     }
     if(color_temp.get_red() == 0){

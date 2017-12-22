@@ -86,6 +86,7 @@ SoftwareSerial BT(11, 12); // RX, TX
 
 void setup() {
     controller.set_led(color);
+    effect.set_controller(controller);
     pinMode(LED_BUILTIN, OUTPUT); //Used for status LED
     BT.begin(9600);
     Serial.begin(9600);
@@ -123,13 +124,16 @@ void listen_to_BT(){
     {
         while (BT.available ()) // "keep receiving".
         {
-            delay (10); // Delay added to make thing stable
+            
             char c = BT.read (); // Conduct serial read
             command += c; // Build the string.
+            if(c == '}'){
+              break;
+            }
+            delay (10); // Delay added to make thing stable
         }
         Serial.println(command);
         char data[315];
-        //char data[512];
         for(int i = 0; i < command.length(); i++){
             data[i] = command[i];
         }
@@ -165,6 +169,7 @@ void listen_to_BT(){
 
 void listen_to_IR(){
     if (myReceiver.getResults()) {
+        jsonBuffer.clear();
         myDecoder.decode();           //Decode it
         live_IR_value = myDecoder.value;
         blink_led();
@@ -180,6 +185,7 @@ void blink_led(){
 }
 
 void execute_IR_commands(){
+  jsonBuffer.clear();
     switch(live_IR_value){
         case IR_WHITE:
         color.WHITE;
@@ -304,11 +310,13 @@ void execute_IR_commands(){
         break;
         
         case IR_OFF:
-        color.OFF;
+        //color.OFF;
+        controller.turn_off();
         controller.set_led(color);
         break;
 
         case IR_ON:
+        controller.turn_on();
         controller.set_led(last_color);
         break;
         
