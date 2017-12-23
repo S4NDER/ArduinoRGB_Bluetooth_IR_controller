@@ -1,5 +1,14 @@
 #include <ArduinoJson.h>
 
+#include <Filters.h>
+
+#define INPUT_PIN 0
+
+// filters out changes faster that 5 Hz.
+float filterFrequency = 1000.0;  
+
+// create a one pole (RC) lowpass filter
+FilterOnePole lowpassFilter( LOWPASS, filterFrequency ); 
 
 #include <StaticThreadController.h>
 #include <Thread.h>
@@ -62,15 +71,17 @@ unsigned char rgb_blue = 0;
 unsigned char bt_red = 0;
 unsigned char bt_green = 0;
 unsigned char bt_blue = 0;
-unsigned short int bt_delay = 0;
+unsigned short int bt_delay = 75;
+bool bt_beats = false;
 
 bool rgb_red_done = false;
 bool rgb_green_done = false;
 bool rgb_blue_done = false;
 
-Thread read_ir_thread = Thread();
-Thread process_ir_thread = Thread();
-Thread th_listen_to_BT = Thread();
+Thread read_ir_thread;
+Thread process_ir_thread;
+Thread th_listen_to_BT;
+Thread thDetectBass;
 unsigned long last_value = IR_RED;
 unsigned long live_IR_value = IR_RED;
 
@@ -86,6 +97,10 @@ String command = ""; // Stores response of bluetooth device
 SoftwareSerial BT(11, 12); // RX, TX
 
 void setup() {
+    read_ir_thread = Thread();
+    process_ir_thread = Thread();
+    th_listen_to_BT = Thread();
+    thDetectBass = Thread();
     controller.set_led(color);
     effect.set_controller(controller);
     pinMode(LED_BUILTIN, OUTPUT); //Used for status LED
@@ -99,11 +114,13 @@ void setup() {
     read_ir_thread.setInterval(2);
     th_listen_to_BT.setInterval(10);
     process_ir_thread.setInterval(10);
+    thDetectBass.setInterval(5);
 
     //Function to run in the thread
     read_ir_thread.onRun(listen_to_IR);
     th_listen_to_BT.onRun(listen_to_BT);
     process_ir_thread.onRun(execute_IR_commands);
+    thDetectBass.onRun(detectBass);
 }
 
 void loop() {
@@ -117,6 +134,9 @@ void loop() {
 
     if(th_listen_to_BT.shouldRun()){
         th_listen_to_BT.run();
+    }
+    if(thDetectBass.shouldRun()){
+        thDetectBass.run();
     }
 }
 
@@ -158,6 +178,7 @@ void listen_to_BT(){
           bt_green = root["green"];
           bt_blue = root["blue"];
           bt_delay = root["delay"];
+          bt_beats= root["beats"];
           String bt_ir_val = root["ir_val"];
           
           jsonBuffer.clear();
@@ -191,7 +212,19 @@ void listen_to_IR(){
         blink_led();
         myReceiver.enableIRIn();      //Restart receiver
     }
+}
 
+void detectBass(){
+  float value = lowpassFilter.input( analogRead( INPUT_PIN ));
+  if(value > 272){
+    live_IR_value = 2;
+    Serial.println(value);
+    digitalWrite(LED_BUILTIN, HIGH);   // turn the LED on (HIGH is the voltage level)  
+  }else {
+    live_IR_value = last_value;
+     digitalWrite(LED_BUILTIN, LOW);    // turn the LED off by making the voltage LOW
+   }
+ 
 }
 
 void blink_led(){
@@ -421,24 +454,35 @@ void execute_IR_commands(){
         last_color.set_color(bt_red, bt_green, bt_blue);
         controller.set_led(color);
         last_value = BT_COMMAND;
-        break; 
+        break;
+
+        case 2: 
+        if(bt_beats){
+          Serial.print("BAM");
+          controller.turn_off();
+          controller.set_led(color);
+              delay(25);
+          controller.turn_on();
+          controller.set_led(color);
+        }
+        break;
         
     }
     if(live_IR_value != IR_FADE){
         rgb_red = 0;
         rgb_green = 0;
         rgb_blue = 0;
-    }
+    }   
 
     if(last_value == IR_SMOOTH){
       unsigned char i = 0;
       for(i = 0; i < 35; i++){
           effect.bright_down(color);
-          delay(100);
+          delay(bt_delay);
       }
       for(i = 35; i > 0 ; i--){
           effect.bright_up(color);
-          delay(100);
+          delay(bt_delay);
       }
     }
     
