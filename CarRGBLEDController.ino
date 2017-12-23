@@ -189,6 +189,7 @@ void listen_to_BT(){
           }
           if(bt_ir_val.length() > 3){
             sscanf(bt_data,"%lX", &live_IR_value); // string to long
+            sscanf(bt_data,"%lX", &last_value); // string to long
           } else {
             live_IR_value = BT_COMMAND;
           }
