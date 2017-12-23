@@ -1,5 +1,6 @@
 #include <ArduinoJson.h>
 
+
 #include <StaticThreadController.h>
 #include <Thread.h>
 #include <ThreadController.h>
@@ -124,47 +125,55 @@ void listen_to_BT(){
     {
         while (BT.available ()) // "keep receiving".
         {
+            delay (10); // Delay added to make thing stable
             char c = BT.read (); // Conduct serial read
             command += c; // Build the string.
 
             if((c =='{') & (command.length()> 1)){
               command = "";
+              break;
             }
 
             if(command.charAt(0) != '{'){
               command = "";
-            }
-            if(c == '}'){
               break;
             }
-            delay (10); // Delay added to make thing stable
+            if(c == '}'){
+              delay(30);
+              break;
+            }
+
         }
-        Serial.println(command);
-        char data[315];
-        for(int i = 0; i < command.length(); i++){
-            data[i] = command[i];
+        if(command.charAt(command.length()-1) == '}'){
+          Serial.println(command);
+          char data[315];
+          for(int i = 0; i < command.length(); i++){
+              data[i] = command[i];
+          }
+          command="";
+          
+          JsonObject& root = jsonBuffer.parseObject(data);
+  
+          bt_red = root["red"];
+          bt_green = root["green"];
+          bt_blue = root["blue"];
+          bt_delay = root["delay"];
+          String bt_ir_val = root["ir_val"];
+          
+          jsonBuffer.clear();
+  
+          char bt_data[128];
+          for(int i = 0; i < bt_ir_val.length(); i++){
+              bt_data[i] = bt_ir_val[i];
+          }
+          if(bt_ir_val.length() > 3){
+            sscanf(bt_data,"%lX", &live_IR_value); // string to long
+          } else {
+            live_IR_value = BT_COMMAND;
+          }
+          blink_led(); 
         }
         
-        JsonObject& root = jsonBuffer.parseObject(data);
-
-        bt_red = root["red"];
-        bt_green = root["green"];
-        bt_blue = root["blue"];
-        bt_delay = root["delay"];
-        String bt_ir_val = root["ir_val"];
-
-        char bt_data[128];
-        for(int i = 0; i < bt_ir_val.length(); i++){
-            bt_data[i] = bt_ir_val[i];
-        }
-        if(bt_ir_val.length() > 3){
-          sscanf(bt_data,"%lX", &live_IR_value); // string to long
-        } else {
-          live_IR_value = BT_COMMAND;
-        }
-        jsonBuffer.clear();
-        blink_led(); 
-
         command = ""; // No repeats
     }
     if (Serial.available ())
