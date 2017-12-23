@@ -178,7 +178,9 @@ void listen_to_BT(){
           bt_green = root["green"];
           bt_blue = root["blue"];
           bt_delay = root["delay"];
-          bt_beats= root["beats"];
+          if(root["beats"] != NULL){
+            bt_beats= root["beats"];
+          }
           String bt_ir_val = root["ir_val"];
           
           jsonBuffer.clear();
@@ -459,7 +461,6 @@ void execute_IR_commands(){
 
         case 2: 
         if(bt_beats){
-          Serial.print("BAM");
           controller.turn_off();
           controller.set_led(color);
               delay(25);
