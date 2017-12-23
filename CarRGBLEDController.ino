@@ -432,11 +432,11 @@ void execute_IR_commands(){
 
     if(last_value == IR_SMOOTH){
       unsigned char i = 0;
-      for(i = 0; i < 25 ; i++){
+      for(i = 0; i < 35; i++){
           effect.bright_down(color);
           delay(100);
       }
-      for(i = 25; i > 0 ; i--){
+      for(i = 35; i > 0 ; i--){
           effect.bright_up(color);
           delay(100);
       }
