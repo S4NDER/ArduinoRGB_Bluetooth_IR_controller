@@ -1,5 +1,8 @@
 #include <ArduinoJson.h>
 
+#include "Microphone.h"
+#include "IRDecoder.h"
+
 
 #include <StaticThreadController.h>
 #include <Thread.h>
@@ -93,7 +96,7 @@ void setup() {
     Serial.begin(9600);
     myReceiver.enableIRIn(); // Start the receiver
     Serial.println(F("Ready to receive IR signals"));
-    
+
 
     //Setting timeintervals (ms) for threads
     read_ir_thread.setInterval(2);
@@ -151,17 +154,17 @@ void listen_to_BT(){
               data[i] = command[i];
           }
           command="";
-          
+
           JsonObject& root = jsonBuffer.parseObject(data);
-  
+
           bt_red = root["red"];
           bt_green = root["green"];
           bt_blue = root["blue"];
           bt_delay = root["delay"];
           String bt_ir_val = root["ir_val"];
-          
+
           jsonBuffer.clear();
-  
+
           char bt_data[128];
           for(int i = 0; i < bt_ir_val.length(); i++){
               bt_data[i] = bt_ir_val[i];
@@ -171,9 +174,9 @@ void listen_to_BT(){
           } else {
             live_IR_value = BT_COMMAND;
           }
-          blink_led(); 
+          blink_led();
         }
-        
+
         command = ""; // No repeats
     }
     if (Serial.available ())
@@ -209,122 +212,122 @@ void execute_IR_commands(){
         controller.set_led(color);
         last_value = IR_WHITE;
         break;
-        
+
         case IR_RED:
         color.RED;
         last_color.RED;
         controller.set_led(color);
         last_value = IR_RED;
         break;
-        
+
         case IR_GREEN:
         color.GREEN;
         last_color.GREEN;
         controller.set_led(color);
         last_value = IR_GREEN;
         break;
-        
+
         case IR_BLUE:
         color.BLUE;
         last_color.BLUE;
         controller.set_led(color);
         last_value = IR_BLUE;
         break;
-        
+
         case IR_ORANGE:
         color.ORANGE;
         last_color.ORANGE;
         controller.set_led(color);
         last_value = IR_ORANGE;
         break;
-        
+
         case IR_DARK_YELLOW:
         color.DARK_YELLOW;
         last_color.DARK_YELLOW;
         controller.set_led(color);
         last_value = IR_DARK_YELLOW;
         break;
-        
+
         case IR_YELLOW:
         color.YELLOW;
         last_color.YELLOW;
         controller.set_led(color);
         last_value = IR_YELLOW;
         break;
-        
+
         case IR_STRAW_YELLOW:
         color.STRAW_YELLOW;
         last_color.STRAW_YELLOW;
         controller.set_led(color);
         last_value = IR_STRAW_YELLOW;
         break;
-        
+
         case IR_PEA_GREEN:
         color.PEA_GREEN;
         last_color.PEA_GREEN;
         controller.set_led(color);
         last_value = IR_PEA_GREEN;
         break;
-        
+
         case IR_CYAN:
         color.CYAN;
         last_color.CYAN;
         controller.set_led(color);
         last_value = IR_CYAN;
         break;
-        
+
         case IR_LIGHT_BLUE:
         color.LIGHT_BLUE;
         last_color.LIGHT_BLUE;
         controller.set_led(color);
         last_value = IR_LIGHT_BLUE;
         break;
-        
+
         case IR_SKY_BLUE:
         color.SKY_BLUE;
         last_color.SKY_BLUE;
         controller.set_led(color);
         last_value = IR_SKY_BLUE;
         break;
-        
+
         case IR_DARK_BLUE:
         color.DARK_BLUE;
         last_color.DARK_BLUE;
         controller.set_led(color);
         last_value = IR_DARK_BLUE;
         break;
-        
+
         case IR_DARK_PINK:
         color.DARK_PINK;
         last_color.DARK_PINK;
         controller.set_led(color);
         last_value = IR_DARK_PINK;
         break;
-        
+
         case IR_PINK:
         color.PINK;
         last_color.PINK;
         controller.set_led(color);
         last_value = IR_PINK;
         break;
-        
+
         case IR_PURPLE :
         color.PURPLE;
         last_color.PURPLE;
         controller.set_led(color);
         last_value = IR_PURPLE;
         break;
-        
+
         case IR_BRIGHT_UP :
         live_IR_value = 0;
         effect.bright_up(color);
         break;
-        
+
         case IR_BRIGHT_DOWN:
         live_IR_value = 0;
         effect.bright_down(color);
         break;
-        
+
         case IR_OFF:
         //color.OFF;
         controller.turn_off();
@@ -335,7 +338,7 @@ void execute_IR_commands(){
         controller.turn_on();
         controller.set_led(last_color);
         break;
-        
+
         case IR_FLASH:
         last_value = IR_FLASH;
         color.WHITE;
@@ -411,7 +414,7 @@ void execute_IR_commands(){
         case IR_FADE:
         last_value = IR_FADE;
         break;
-        
+
         case IR_SMOOTH:
         last_value = IR_SMOOTH;
         break;
@@ -421,8 +424,8 @@ void execute_IR_commands(){
         last_color.set_color(bt_red, bt_green, bt_blue);
         controller.set_led(color);
         last_value = BT_COMMAND;
-        break; 
-        
+        break;
+
     }
     if(live_IR_value != IR_FADE){
         rgb_red = 0;
@@ -441,7 +444,7 @@ void execute_IR_commands(){
           delay(100);
       }
     }
-    
+
     if(live_IR_value == IR_STROBE){
         effect.flash(color, 200);
     }
