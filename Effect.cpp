@@ -1,13 +1,13 @@
 #include "Effect.h"
 #include "Arduino.h"
 
-#define RED Color(255,0,0)
-#define GREEN Color(0,255,0)
-#define BLUE Color(0,0,255)
-#define OFF Color(0,0,0)
+#define E_RED Color(255,0,0)
+#define E_GREEN Color(0,255,0)
+#define E_BLUE Color(0,0,255)
+#define E_OFF Color(0,0,0)
 
 Effect::Effect(void){
-  
+
 }
 
 void Effect::set_controller(LEDController &controller){
@@ -17,7 +17,7 @@ void Effect::set_controller(LEDController &controller){
 void Effect::flash (Color color, unsigned short int delaytime){
     controller.set_led(color);
     delay(delaytime);
-    controller.set_led(OFF);
+    controller.set_led(E_OFF);
     delay(delaytime);
 }
 void Effect::bright_up(Color &color_temp){
@@ -113,10 +113,10 @@ void Effect::normalize_to_color(Color color_temp, Color color_to_normalize_to, u
 }
 
 void Effect::cycle_rgb(unsigned short int delaytime){
-    normalize_to_color(OFF, RED,delaytime);
-    normalize_to_color(RED, GREEN,delaytime);
-    normalize_to_color(GREEN, BLUE,delaytime);
-    normalize_to_color(BLUE, OFF,delaytime);
+    normalize_to_color(E_OFF, E_RED,delaytime);
+    normalize_to_color(E_RED, E_GREEN,delaytime);
+    normalize_to_color(E_GREEN, E_BLUE,delaytime);
+    normalize_to_color(E_BLUE, E_OFF,delaytime);
 }
 
 void Effect::cycly_rgb(void){

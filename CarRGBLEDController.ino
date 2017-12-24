@@ -1,7 +1,10 @@
 #include <ArduinoJson.h>
 
+#include "HC06.h"
 #include "Microphone.h"
 #include "IRDecoder.h"
+#include "JSONDecoder.h"
+#include "CommandProcessor.h"
 
 
 #include <StaticThreadController.h>
