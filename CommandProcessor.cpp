@@ -93,6 +93,19 @@ void CommandProcessor::processCommand (unsigned long command){
         break;
 
         case IR_FADE;
+
+        break;
+
+        case IR_SMOOTH:
+        unsigned char i = 0;
+        for(i = 0; i < 35; i++){
+            effect.bright_down(color);
+            delay(100);
+        }
+        for(i = 35; i > 0 ; i--){
+            effect.bright_up(color);
+            delay(100);
+        }
         break;
     }
     controller.set_led(color);
