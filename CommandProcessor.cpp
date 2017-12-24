@@ -1,7 +1,7 @@
 #include "CommandProcessor.h"
 
 CommandProcessor::CommandProcessor (void){
-
+    effect.set_color(controller);
 }
 
 void CommandProcessor::processCommand (unsigned long command){
@@ -68,6 +68,31 @@ void CommandProcessor::processCommand (unsigned long command){
 
         case IR_PURPLE :
         color.PURPLE;
+        break;
+
+        case IR_BRIGHT_UP :
+        effect.bright_up(color);
+        break;
+
+        case IR_BRIGHT_DOWN:
+        effect.bright_down(color);
+        break;
+
+        case IR_OFF:
+        controller.turn_off();
+        controller.set_led(color);
+        break;
+
+        case IR_ON:
+        controller.turn_on();
+        controller.set_led(last_color);
+        break;
+
+        case IR_STROBE:
+        effect.flash(color, 200);
+        break;
+
+        case IR_FADE;
         break;
     }
     controller.set_led(color);

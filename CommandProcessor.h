@@ -9,6 +9,7 @@ class CommandProcessor {
 private:
     LEDController controller;
     Color color;
+    Effect effect;
 
 public:
     CommandProcessor (void);
