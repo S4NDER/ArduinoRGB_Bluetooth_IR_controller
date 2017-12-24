@@ -1,6 +1,7 @@
 #include "CommandProcessor.h"
 
 CommandProcessor::CommandProcessor (void){
+    controller.set_led(color);
     effect.set_color(controller);
 }
 
