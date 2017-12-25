@@ -3,6 +3,7 @@
 #include "IRDecoder.h"
 #include "JSONDecoder.h"
 #include "CommandProcessor.h"
+#include "Defines.h"
 #include "Color.h"
 #include "Effect.h"
 #include "LEDController.h"
@@ -10,8 +11,6 @@
 #include <StaticThreadController.h>
 #include <Thread.h>
 #include <ThreadController.h>
-
-#define BT_COMMAND 1
 
 CommandProcessor commandProcessor;
 JSONDecoder jsonDecoder;
@@ -51,6 +50,10 @@ void processBT(){
         if( jsonDecoder.getValueIRCode() > 0 ){
           commandProcessor.setInputCommand(jsonDecoder.getValueIRCode());
         }
+    }
+    if (jsonDecoder.hasRGBInput()) {
+        commandProcessor.setInputCommand(BT_COMMAND);
+        commandProcessor.setRGBColor(jsonDecoder.getValueRed(), jsonDecoder.getValueGreen(), jsonDecoder.getValueBlue());
     }
 }
 

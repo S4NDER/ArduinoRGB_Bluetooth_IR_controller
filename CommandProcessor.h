@@ -30,4 +30,5 @@ public:
     CommandProcessor (void);
     void processCommand (void);
     void setInputCommand(unsigned long inputCommand);
+    void setRGBColor(unsigned char red, unsigned char green, unsigned char blue);
 };

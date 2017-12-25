@@ -27,3 +27,5 @@
 #define IR_DARK_PINK 0xF7708F
 #define IR_PINK  0xF748B7
 #define IR_PURPLE  0xF76897
+
+#define BT_COMMAND 1

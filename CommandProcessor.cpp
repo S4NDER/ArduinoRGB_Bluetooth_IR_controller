@@ -11,6 +11,10 @@ void CommandProcessor::setInputCommand(unsigned long inputCommand){
     Serial.println(inputCommand);
 }
 
+void CommandProcessor::setRGBColor(unsigned char red, unsigned char green, unsigned char blue){
+    color.set_color(red, green, blue);
+}
+
 void CommandProcessor::processCommand (void){
     switch (inputCommand) {
         case IR_WHITE: color.WHITE; break;
