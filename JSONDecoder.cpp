@@ -28,9 +28,12 @@ void JSONDecoder::decodeString(String input){
         for (unsigned char i = 0; i < tempIRCode.length(); i++) {
             chTempIRCode[i] = tempIRCode[i];
         }
-        if (tempIRCode.length() > 3) {
+        if (tempIRCode.length() > 7) {
             sscanf(chTempIRCode,"%lX", &valueIRCode);
+            isChanged = true;
         }
+    } else {
+      isChanged = false;
     }
 }
 
@@ -56,4 +59,8 @@ unsigned long JSONDecoder::getValueIRCode (void){
 
 bool JSONDecoder::getBeatEnabled(void){
     return beatsEnabled;
+}
+
+bool JSONDecoder::hasChanged(void){
+    return isChanged;
 }

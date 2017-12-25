@@ -47,8 +47,11 @@ void loop() {
 
 void processBT(){
     jsonDecoder.decodeString(hc06.getInput());
-    if( jsonDecoder.getValueIRCode() > 0 )
-      commandProcessor.setInputCommand(jsonDecoder.getValueIRCode());
+    if (jsonDecoder.hasChanged()) {
+        if( jsonDecoder.getValueIRCode() > 0 ){
+          commandProcessor.setInputCommand(jsonDecoder.getValueIRCode());
+        }
+    }
 }
 
 void processIR(){

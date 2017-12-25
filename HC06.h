@@ -3,8 +3,6 @@
 #include "Arduino.h"
 #include <SoftwareSerial.h>
 
-
-
 class HC06 {
 private:
     SoftwareSerial BT = SoftwareSerial(11, 12);                                 //RX, TX

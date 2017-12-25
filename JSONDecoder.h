@@ -1,5 +1,6 @@
 #pragma once
 #include "Arduino.h"
+#include "Defines.h"
 #include <ArduinoJson.h>
 
 #define JSON_BUFFER 320
@@ -11,8 +12,10 @@ private:
     unsigned char green;
     unsigned char blue;
     unsigned short int delayTime;
-    unsigned long valueIRCode;
+    unsigned long valueIRCode = IR_RED;
     bool beatsEnabled;
+    bool isChanged = true;
+    String previousCode = "";
 
 public:
     JSONDecoder (void);
@@ -23,4 +26,5 @@ public:
     unsigned short int getValueDelay (void);
     unsigned long getValueIRCode (void);
     bool getBeatEnabled(void);
+    bool hasChanged (void);
 };
