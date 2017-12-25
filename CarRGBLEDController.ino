@@ -16,12 +16,14 @@ IRDecoder irReceiver;
 HC06 hc06;
 
 void setup() {
+    Serial.begin(9600);
     irReceiver.init();
     microphone.init();
     hc06.init();
-
 }
 
 void loop() {
+
+    commandProcessor.processCommand(irReceiver.getCode());
 
 }

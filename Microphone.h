@@ -6,7 +6,7 @@ private:
 
 public:
     Microphone (void);
-    void initMic(void);
+    void init(void);
     float getMicLevel(void);
     float getBassLevel(void);
 

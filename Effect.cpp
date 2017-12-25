@@ -6,7 +6,7 @@
 #define E_BLUE Color(0,0,255)
 #define E_OFF Color(0,0,0)
 
-Effect::Effect(LEDController &controller){
+Effect::Effect(void){
     this->controller = controller;
 }
 

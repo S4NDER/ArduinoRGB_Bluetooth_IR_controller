@@ -6,10 +6,10 @@
 #define BASS_THRESHOLD 272
 
 Microphone::Microphone (void){
-    initMic();
+    init();
 }
 
-void Microphone::initMic(void){
+void Microphone::init(void){
     Serial.begin(9600);
 }
 

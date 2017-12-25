@@ -15,7 +15,8 @@ void IRDecoder::startReceiver(){
 }
 
 unsigned long IRDecoder::getCode(void){
-    if(hasReceivedData()){
+    if(receiver.getResults()){
+        decodeData();
         startReceiver();
         return decoder.value;
     }
@@ -24,8 +25,4 @@ unsigned long IRDecoder::getCode(void){
 
 void IRDecoder::decodeData(void){
     decoder.decode();
-}
-
-bool IRDecoder::hasReceivedData(void){
-    return receiver.getResults();
 }

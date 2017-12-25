@@ -19,5 +19,4 @@ public:
 private:
     void startReceiver(void);
     void decodeData(void);
-    bool hasReceivedData(void);
 };

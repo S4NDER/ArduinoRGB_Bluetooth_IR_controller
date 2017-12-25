@@ -1,8 +1,9 @@
 #include "CommandProcessor.h"
+#include "Arduino.h"
 
 CommandProcessor::CommandProcessor (void){
     controller.set_led(color);
-    effect.set_color(controller);
+    effect.set_controller(controller);
 }
 
 void CommandProcessor::processCommand (unsigned long command){
@@ -86,14 +87,14 @@ void CommandProcessor::processCommand (unsigned long command){
 
         case IR_ON:
         controller.turn_on();
-        controller.set_led(last_color);
+        controller.set_led(color);
         break;
 
         case IR_STROBE:
         effect.flash(color, 200);
         break;
 
-        case IR_FADE;
+        case IR_FADE:
 
         break;
 
