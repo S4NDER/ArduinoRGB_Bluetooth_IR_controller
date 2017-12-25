@@ -20,6 +20,10 @@ private:
     bool rgb_green_done = false;
     bool rgb_blue_done = false;
 
+    unsigned char brightnessCounter = 0;
+    bool doneBrightUp = true;
+    bool doneBrightDown = false;
+
 public:
     CommandProcessor (void);
     void processCommand (void);

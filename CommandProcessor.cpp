@@ -147,17 +147,34 @@ void CommandProcessor::processCommand (void){
         color.set_color(rgb_red,rgb_green, rgb_blue);
         break;
 
-        case IR_SMOOTH:
-        unsigned char i = 0;
-        for(i = 0; i < 35; i++){
+        case IR_SMOOTH:  
+        if(!doneBrightDown){
+          if(brightnessCounter >= 35){
+            doneBrightDown = true;
+            doneBrightUp = false;  
+          } else{
+            brightnessCounter ++;
             effect.bright_down(color);
             delay(100);
+          }
         }
-        for(i = 35; i > 0 ; i--){
+        if(!doneBrightUp){
+          if(brightnessCounter <= 0){
+            doneBrightDown = false;
+            doneBrightUp = true;  
+          } else{
+            brightnessCounter --;
             effect.bright_up(color);
             delay(100);
+          }
+        
         }
         break;
+    }
+    if(inputCommand != IR_SMOOTH){
+        brightnessCounter = 0;
+        doneBrightUp = true;
+        doneBrightDown = false;
     }
     controller.set_led(color);
 
