@@ -8,7 +8,7 @@ CommandProcessor::CommandProcessor (void){
 
 void CommandProcessor::setInputCommand(unsigned long inputCommand){
     this->inputCommand = inputCommand;
-    Serial.println(inputCommand);  
+    Serial.println(inputCommand);
 }
 
 void CommandProcessor::processCommand (void){
@@ -79,10 +79,12 @@ void CommandProcessor::processCommand (void){
 
         case IR_BRIGHT_UP :
         effect.bright_up(color);
+        inputCommand = 0;
         break;
 
         case IR_BRIGHT_DOWN:
         effect.bright_down(color);
+        inputCommand = 0;
         break;
 
         case IR_OFF:
