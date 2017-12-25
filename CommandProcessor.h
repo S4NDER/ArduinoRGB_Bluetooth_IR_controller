@@ -13,6 +13,13 @@ private:
 
     unsigned long inputCommand;
 
+    unsigned char rgb_red = 0;
+    unsigned char rgb_green = 0;
+    unsigned char rgb_blue = 0;
+    bool rgb_red_done = false;
+    bool rgb_green_done = false;
+    bool rgb_blue_done = false;
+
 public:
     CommandProcessor (void);
     void processCommand (void);

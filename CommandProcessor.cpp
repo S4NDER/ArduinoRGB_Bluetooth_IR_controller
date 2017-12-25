@@ -102,7 +102,49 @@ void CommandProcessor::processCommand (void){
         break;
 
         case IR_FADE:
+        if(!rgb_red_done){
+            if(rgb_red == 255){
+                rgb_red_done = true;
+                rgb_green_done = false;
+            } else{
+                effect.normalize_to_color(Color(rgb_red, rgb_green, rgb_blue),Color((rgb_red+1),(rgb_green),(rgb_blue)),2);
+                rgb_red ++;
+                rgb_green_done = true;
+                rgb_blue_done = true;
+            }
+        }
 
+        if(!rgb_green_done){
+            if(rgb_green == 255){
+                rgb_green_done = true;
+                rgb_blue_done = false;
+            } else{
+                effect.normalize_to_color(Color(rgb_red, rgb_green, rgb_blue),Color((rgb_red),(rgb_green+1),(rgb_blue)),2);
+                rgb_green ++;
+                rgb_red --;
+                rgb_blue_done = true;
+            }
+        }
+
+        if(!rgb_blue_done){
+            if(rgb_blue == 255){
+                rgb_blue_done = true;
+            } else{
+                effect.normalize_to_color(Color(rgb_red, rgb_green, rgb_blue),Color((rgb_red),(rgb_green),(rgb_blue+1)),2);
+                rgb_blue ++;
+                rgb_green --;
+            }
+        }
+
+        if(rgb_red_done & rgb_green_done & rgb_blue_done){
+            if(rgb_blue == 0){
+                rgb_red_done = false;
+            } else {
+                effect.normalize_to_color(Color(rgb_red, rgb_green, rgb_blue),Color((rgb_red),(rgb_green),(rgb_blue-1)),2);
+                rgb_blue --;
+            }
+        }
+        color.set_color(rgb_red,rgb_green, rgb_blue);
         break;
 
         case IR_SMOOTH:
