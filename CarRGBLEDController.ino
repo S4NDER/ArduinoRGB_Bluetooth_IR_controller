@@ -4,9 +4,6 @@
 #include "JSONDecoder.h"
 #include "CommandProcessor.h"
 #include "Defines.h"
-#include "Color.h"
-#include "Effect.h"
-#include "LEDController.h"
 
 #include <StaticThreadController.h>
 #include <Thread.h>
