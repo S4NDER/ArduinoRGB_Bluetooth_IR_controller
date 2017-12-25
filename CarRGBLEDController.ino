@@ -52,7 +52,9 @@ void processBT(){
 }
 
 void processIR(){
-    commandProcessor.setInputCommand(irReceiver.getCode());
+    irReceiver.receiveCode();
+    if(irReceiver.hasChanged())
+        commandProcessor.setInputCommand(irReceiver.getIRValue());
 }
 
 void processInputCommand(){

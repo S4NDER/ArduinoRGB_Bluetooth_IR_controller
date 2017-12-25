@@ -14,20 +14,25 @@ void IRDecoder::startReceiver(){
     receiver.enableIRIn(); // Start the receiver
 }
 
-unsigned long IRDecoder::getCode(void){
+void IRDecoder::receiveCode(void){
     if(receiver.getResults()){
         decodeData();
         startReceiver();
         irCode = decoder.value;
+        isChanged = true;
+    } else {
+        isChanged = false;
     }
-    return irCode;
 }
 
 void IRDecoder::decodeData(void){
     decoder.decode();
 }
 
-//TODO
-/*
-Create method that returns boolean and keeps a previous state of the IRCommand to track if there is a change
-*/
+unsigned long IRDecoder::getIRValue(void){
+  return irCode;
+}
+
+bool IRDecoder::hasChanged(void){
+    return isChanged;
+}

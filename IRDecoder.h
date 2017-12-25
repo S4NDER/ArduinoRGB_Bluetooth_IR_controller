@@ -11,11 +11,14 @@ private:
     IRdecode decoder;
     IRrecvPCI receiver = IRrecvPCI(2);
     unsigned long irCode = 0;
+    bool isChanged = true;
 
 public:
     IRDecoder (void);
     void init(void);
-    unsigned long getCode(void);
+    void receiveCode(void);
+    bool hasChanged(void);
+    unsigned long getIRValue(void);
 
 private:
     void startReceiver(void);
