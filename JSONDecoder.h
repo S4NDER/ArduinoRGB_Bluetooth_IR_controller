@@ -15,16 +15,20 @@ private:
     unsigned long valueIRCode = IR_RED;
     bool beatsEnabled;
     bool isChanged = true;
+    bool rgbInput = false;
     String previousCode = "";
+
+    bool findText(String word, String text);
 
 public:
     JSONDecoder (void);
-    void decodeString(String input);
+    void decodeString (String input);
     unsigned char getValueRed (void);
     unsigned char getValueGreen (void);
     unsigned char getValueBlue (void);
     unsigned short int getValueDelay (void);
     unsigned long getValueIRCode (void);
-    bool getBeatEnabled(void);
+    bool getBeatEnabled (void);
     bool hasChanged (void);
+    bool hasRGBInput (void);
 };

@@ -12,28 +12,42 @@ void JSONDecoder::decodeString(String input){
         }
         StaticJsonBuffer<JSON_BUFFER> jsonBuffer;
         JsonObject& root = jsonBuffer.parseObject(data);
+        jsonBuffer.clear();
 
-        red = root["red"];
-        green = root["green"];
-        blue = root["blue"];
-        delayTime = root["delay"];
-        String tempIRCode = root["ir_val"];
-
-        if (root["beats"] = 't') {
-            beatsEnabled = true;
-        } else if (root["beats"] = 'f') {
-            beatsEnabled = false;
+        if(findText("red", input)){
+            red = root["red"];
+            rgbInput = true;
         }
-        char chTempIRCode[128];
-        for (unsigned char i = 0; i < tempIRCode.length(); i++) {
-            chTempIRCode[i] = tempIRCode[i];
+        if(findText("green", input)){
+            green = root["green"];
+            rgbInput = true;
         }
-        if (tempIRCode.length() > 7) {
-            sscanf(chTempIRCode,"%lX", &valueIRCode);
-            isChanged = true;
+        if(findText("blue", input)){
+            blue = root["blue"];
+            rgbInput = true;
         }
+        if(findText("delay", input)){
+            delayTime = root["delay"];
+        }
+        if(findText("ir_val", input)){
+            String tempIRCode = root["ir_val"];
+            char chTempIRCode[128];
+            for (unsigned char i = 0; i < tempIRCode.length(); i++) {
+                chTempIRCode[i] = tempIRCode[i];
+            }
+            if (tempIRCode.length() > 7) {
+                sscanf(chTempIRCode,"%lX", &valueIRCode);
+                isChanged = true;
+                rgbInput = false;
+            }
+        }
+        if(findText("beats", input)){
+            beatsEnabled = root["beats"];
+        }
+        Serial.println(beatsEnabled);
     } else {
       isChanged = false;
+      rgbInput = false;
     }
 }
 
@@ -57,10 +71,23 @@ unsigned long JSONDecoder::getValueIRCode (void){
     return valueIRCode;
 }
 
-bool JSONDecoder::getBeatEnabled(void){
+bool JSONDecoder::getBeatEnabled (void){
     return beatsEnabled;
 }
 
-bool JSONDecoder::hasChanged(void){
+bool JSONDecoder::hasChanged (void){
     return isChanged;
+}
+
+bool JSONDecoder::hasRGBInput (void){
+    return rgbInput;
+}
+
+bool JSONDecoder::findText(String word, String text) {
+  for (int i = 0; i <= text.length() - word.length(); i++) {
+    if (text.substring(i,word.length()+i) == word) {
+      return true;
+    }
+  }
+  return false;
 }
