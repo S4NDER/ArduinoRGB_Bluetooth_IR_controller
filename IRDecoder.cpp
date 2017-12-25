@@ -18,8 +18,13 @@ void IRDecoder::receiveCode(void){
     if(receiver.getResults()){
         decodeData();
         startReceiver();
-        irCode = decoder.value;
-        isChanged = true;
+        if((decoder.value == 4294967295) || (decoder.value == 0)){
+          isChanged = false;
+          return;
+        } else{
+          irCode = decoder.value;
+          isChanged = true;
+        }
     } else {
         isChanged = false;
     }
