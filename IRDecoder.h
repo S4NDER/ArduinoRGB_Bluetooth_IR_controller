@@ -10,6 +10,7 @@ class IRDecoder {
 private:
     IRdecode decoder;
     IRrecvPCI receiver = IRrecvPCI(2);
+    unsigned long irCode = 0;
 
 public:
     IRDecoder (void);

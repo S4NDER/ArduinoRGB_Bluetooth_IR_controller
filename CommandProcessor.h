@@ -11,7 +11,10 @@ private:
     Color color;
     Effect effect;
 
+    unsigned long inputCommand;
+
 public:
     CommandProcessor (void);
-    void processCommand (unsigned long command);
+    void processCommand (void);
+    void setInputCommand(unsigned long inputCommand);
 };

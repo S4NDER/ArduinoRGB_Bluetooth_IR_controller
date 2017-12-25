@@ -6,8 +6,13 @@ CommandProcessor::CommandProcessor (void){
     effect.set_controller(controller);
 }
 
-void CommandProcessor::processCommand (unsigned long command){
-    switch (command) {
+void CommandProcessor::setInputCommand(unsigned long inputCommand){
+    this->inputCommand = inputCommand;
+    Serial.println(inputCommand);  
+}
+
+void CommandProcessor::processCommand (void){
+    switch (inputCommand) {
         case IR_WHITE:
         color.WHITE;
         break;

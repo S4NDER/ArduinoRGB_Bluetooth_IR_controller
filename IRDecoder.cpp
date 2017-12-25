@@ -18,11 +18,16 @@ unsigned long IRDecoder::getCode(void){
     if(receiver.getResults()){
         decodeData();
         startReceiver();
-        return decoder.value;
+        irCode = decoder.value;
     }
-    return 0;
+    return irCode;
 }
 
 void IRDecoder::decodeData(void){
     decoder.decode();
 }
+
+//TODO
+/*
+Create method that returns boolean and keeps a previous state of the IRCommand to track if there is a change
+*/

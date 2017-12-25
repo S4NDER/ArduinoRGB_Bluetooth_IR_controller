@@ -40,6 +40,7 @@ String HC06::getInput(void){
                 break;
             }
         }
+        Serial.println(input);
     }
     if(Serial.available()){
         delay(10);
