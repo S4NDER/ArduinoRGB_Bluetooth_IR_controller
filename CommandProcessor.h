@@ -24,6 +24,8 @@ private:
     bool doneBrightUp = true;
     bool doneBrightDown = false;
 
+    unsigned char flashCounter = 0;
+
 public:
     CommandProcessor (void);
     void processCommand (void);
