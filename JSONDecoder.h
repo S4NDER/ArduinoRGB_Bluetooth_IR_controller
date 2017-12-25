@@ -13,10 +13,9 @@ private:
     unsigned char blue;
     unsigned short int delayTime;
     unsigned long valueIRCode = IR_RED;
-    bool beatsEnabled;
-    bool isChanged = true;
-    bool rgbInput = false;
-    String previousCode = "";
+    volatile bool beatsEnabled = false;
+    volatile bool isChanged = true;
+    volatile bool rgbInput = false;
 
     bool findText(String word, String text);
 

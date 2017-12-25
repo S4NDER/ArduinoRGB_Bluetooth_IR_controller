@@ -12,9 +12,9 @@ void JSONDecoder::decodeString(String input){
         }
         StaticJsonBuffer<JSON_BUFFER> jsonBuffer;
         JsonObject& root = jsonBuffer.parseObject(data);
-        jsonBuffer.clear();
-
+        //jsonBuffer.clear();
         if(findText("red", input)){
+          Serial.println("found red");
             red = root["red"];
             rgbInput = true;
         }
@@ -44,7 +44,9 @@ void JSONDecoder::decodeString(String input){
         if(findText("beats", input)){
             beatsEnabled = root["beats"];
         }
-        Serial.println(beatsEnabled);
+        Serial.println(red);
+        Serial.println(green);
+        Serial.println(blue);
     } else {
       isChanged = false;
       rgbInput = false;

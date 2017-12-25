@@ -20,6 +20,7 @@ HC06 hc06;
 
 Thread thIR = Thread();
 Thread thBT = Thread();
+Thread thMic = Thread();
 Thread thProcessInputCommand = Thread();
 
 void setup() {
@@ -34,6 +35,9 @@ void setup() {
     thBT.setInterval(10);
     thBT.onRun(processBT);
 
+    thMic.setInterval(5);
+    thMic.onRun(processMic);
+
     thProcessInputCommand.setInterval(10);
     thProcessInputCommand.onRun(processInputCommand);
 }
@@ -42,16 +46,19 @@ void loop() {
     thIR.run();
     thBT.run();
     thProcessInputCommand.run();
+    //thMic.run();
 }
 
 void processBT(){
     jsonDecoder.decodeString(hc06.getInput());
     if (jsonDecoder.hasChanged()) {
+      Serial.println("IR");
         if( jsonDecoder.getValueIRCode() > 0 ){
           commandProcessor.setInputCommand(jsonDecoder.getValueIRCode());
         }
     }
     if (jsonDecoder.hasRGBInput()) {
+      Serial.println("RGB");
         commandProcessor.setInputCommand(BT_COMMAND);
         commandProcessor.setRGBColor(jsonDecoder.getValueRed(), jsonDecoder.getValueGreen(), jsonDecoder.getValueBlue());
     }
@@ -61,6 +68,14 @@ void processIR(){
     irReceiver.receiveCode();
     if(irReceiver.hasChanged())
         commandProcessor.setInputCommand(irReceiver.getIRValue());
+}
+
+void processMic() {
+  if(jsonDecoder.getBeatEnabled()){
+      if(microphone.hasBass()){
+          commandProcessor.setInputCommand(MIC_FLASH);
+      }
+  }
 }
 
 void processInputCommand(){

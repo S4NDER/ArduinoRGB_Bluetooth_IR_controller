@@ -2,7 +2,7 @@
 
 class Microphone {
 private:
-    float filterFrequency = 500;
+    float filterFrequency = 1500;
 
 public:
     Microphone (void);
@@ -13,5 +13,6 @@ public:
 public:
     float getFilterFrequency(void);
     void setFilterFrequency(float filterFrequency);
+    bool hasBass(void);
 
 };

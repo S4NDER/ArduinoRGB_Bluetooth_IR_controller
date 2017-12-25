@@ -29,3 +29,4 @@
 #define IR_PURPLE  0xF76897
 
 #define BT_COMMAND 1
+#define MIC_FLASH 2

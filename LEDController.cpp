@@ -34,3 +34,7 @@ void LEDController::turn_on(void){
 void LEDController::turn_off(void){
   turnedOn = false;
 }
+
+bool LEDController::getPowerState(void){
+    return turnedOn;
+}
