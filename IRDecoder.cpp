@@ -7,7 +7,7 @@ IRDecoder::IRDecoder (void){
 void IRDecoder::init(void){
     Serial.begin(9600);
     startReceiver();
-    Serial.println(F("Ready to receive IR signals"));
+    Serial.println("Ready to receive IR signals");
 }
 
 void IRDecoder::startReceiver(){

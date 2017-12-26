@@ -7,18 +7,6 @@ HC06::HC06 (void){
 void HC06::init(void){
     BT.begin(9600);
 }
-/*
-char HC06::getData(void){
-    String input = getInput();
-    char *data[DATA_BUFFER];
-    if(input.charAt(input.length()-1) == '}'){                                  //Message has valid end
-        for (unsigned short int i = 0; i < input.length(); i++) {               //Parsing string into char array
-            data[i] = input[i];
-        }
-    }
-    return *data;
-}
-*/
 
 String HC06::getInput(void){
     String input = "";

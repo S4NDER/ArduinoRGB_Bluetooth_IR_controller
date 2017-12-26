@@ -16,7 +16,6 @@ private:
     bool beatsEnabled;
     bool isChanged = true;
     bool rgbInput = false;
-    String previousCode = "";
 
     bool findText(String word, String text);
 

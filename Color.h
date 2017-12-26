@@ -1,23 +1,23 @@
 #pragma once
-#define OFF set_color (0, 0, 0)
-#define RED set_color(255, 0, 0)
-#define GREEN set_color(0, 255, 0)
-#define BLUE set_color(0, 0, 255)
-#define WHITE set_color(255, 255, 255)
-#define ORANGE set_color(255, 90, 0)
-#define DARK_YELLOW set_color(204, 204, 0)
-#define YELLOW set_color(255, 130, 0)
-#define STRAW_YELLOW set_color(255, 206, 0)
+#define OFF setColor (0, 0, 0)
+#define RED setColor(255, 0, 0)
+#define GREEN setColor(0, 255, 0)
+#define BLUE setColor(0, 0, 255)
+#define WHITE setColor(255, 255, 255)
+#define ORANGE setColor(255, 90, 0)
+#define DARK_YELLOW setColor(204, 204, 0)
+#define YELLOW setColor(255, 130, 0)
+#define STRAW_YELLOW setColor(255, 206, 0)
 
-#define PEA_GREEN set_color(44, 255, 22)
-#define CYAN set_color(0, 255, 255)
-#define LIGHT_BLUE set_color(0, 147, 255)
-#define SKY_BLUE set_color(51, 197, 255)
+#define PEA_GREEN setColor(44, 255, 22)
+#define CYAN setColor(0, 255, 255)
+#define LIGHT_BLUE setColor(0, 147, 255)
+#define SKY_BLUE setColor(51, 197, 255)
 
-#define DARK_BLUE set_color(0, 0, 139)
-#define DARK_PINK set_color(137, 31, 202)
-#define PINK set_color(137, 0, 142)
-#define PURPLE set_color(255, 0, 142)
+#define DARK_BLUE setColor(0, 0, 139)
+#define DARK_PINK setColor(137, 31, 202)
+#define PINK setColor(137, 0, 142)
+#define PURPLE setColor(255, 0, 142)
 
 class Color {
 private:
@@ -29,14 +29,14 @@ public:
     Color (void);
     Color (float red, float green, float blue);
 
-    void set_color (float red, float green, float blue);
+    void setColor (float red, float green, float blue);
 
-    float get_red(void);
-    float get_green(void);
-    float get_blue(void);
+    float getRed(void);
+    float getGreen(void);
+    float getBlue(void);
 
 private:
-    void set_red(float red);
-    void set_green(float green);
-    void set_blue(float blue);
+    void setRed(float red);
+    void setGreen(float green);
+    void setBlue(float blue);
 };

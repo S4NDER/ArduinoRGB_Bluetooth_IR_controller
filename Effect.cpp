@@ -10,115 +10,115 @@ Effect::Effect(void){
     this->controller = controller;
 }
 
-void Effect::set_controller(LEDController &controller){
+void Effect::setController(LEDController &controller){
   this->controller = controller;
 }
 
 void Effect::flash (Color color, unsigned short int delaytime){
-    controller.set_led(color);
+    controller.setLED(color);
     delay(delaytime);
-    controller.set_led(E_OFF);
+    controller.setLED(E_OFF);
     delay(delaytime);
 }
-void Effect::bright_up(Color &color_temp){
-    temp_red = color_temp.get_red();
-    temp_green = color_temp.get_green();
-    temp_blue = color_temp.get_blue();
+void Effect::increaseBrightness(Color &color_temp){
+    temp_red = color_temp.getRed();
+    temp_green = color_temp.getGreen();
+    temp_blue = color_temp.getBlue();
 
-    if(color_temp.get_red()*1.1 <= 255.00){
-      temp_red = color_temp.get_red()*1.1;
+    if(color_temp.getRed()*1.1 <= 255.00){
+      temp_red = color_temp.getRed()*1.1;
     }
-    if(color_temp.get_red() == 0){
+    if(color_temp.getRed() == 0){
       temp_red = 0;
     }
-    if(color_temp.get_green()*1.1 <= 255){
-      temp_green= color_temp.get_green()*1.1;
+    if(color_temp.getGreen()*1.1 <= 255){
+      temp_green= color_temp.getGreen()*1.1;
     }
-    if(color_temp.get_green() == 0){
+    if(color_temp.getGreen() == 0){
       temp_green = 0;
     }
-    if(color_temp.get_blue()*1.1 <= 255){
-      temp_blue = color_temp.get_blue()*1.1;
+    if(color_temp.getBlue()*1.1 <= 255){
+      temp_blue = color_temp.getBlue()*1.1;
     }
-    if(color_temp.get_blue() == 0){
+    if(color_temp.getBlue() == 0){
       temp_blue = 0;
     }
-    color_temp.set_color(temp_red, temp_green, temp_blue);
-    controller.set_led(color_temp);
+    color_temp.setColor(temp_red, temp_green, temp_blue);
+    controller.setLED(color_temp);
 }
 
-void Effect::bright_down(Color &color_temp){
-    if(color_temp.get_red()/1.1 > 5){
-      temp_red = color_temp.get_red()/1.1;
+void Effect::decreaseBrightness(Color &color_temp){
+    if(color_temp.getRed()/1.1 > 5){
+      temp_red = color_temp.getRed()/1.1;
     }
-    if(color_temp.get_red() == 0){
+    if(color_temp.getRed() == 0){
       temp_red = 0;
     }
-    if(color_temp.get_green()/1.1 > 5){
-      temp_green = color_temp.get_green()/1.1;
+    if(color_temp.getGreen()/1.1 > 5){
+      temp_green = color_temp.getGreen()/1.1;
     }
-    if(color_temp.get_green() == 0){
+    if(color_temp.getGreen() == 0){
       temp_green = 0;
     }
-    if(color_temp.get_blue()/1.1 > 5){
-      temp_blue = color_temp.get_blue()/1.1;
+    if(color_temp.getBlue()/1.1 > 5){
+      temp_blue = color_temp.getBlue()/1.1;
     }
-    if(color_temp.get_blue() == 0){
+    if(color_temp.getBlue() == 0){
       temp_blue = 0;
     }
-    color_temp.set_color(temp_red, temp_green, temp_blue);
-    controller.set_led(color_temp);
+    color_temp.setColor(temp_red, temp_green, temp_blue);
+    controller.setLED(color_temp);
 }
 
-void Effect::normalize_to_color(Color color_temp, Color color_to_normalize_to, unsigned short int delaytime){
-    temp_red = color_temp.get_red();
-    temp_green = color_temp.get_green();
-    temp_blue = color_temp.get_blue();
+void Effect::normalizeToColor(Color color_temp, Color color_to_normalize_to, unsigned short int delaytime){
+    temp_red = color_temp.getRed();
+    temp_green = color_temp.getGreen();
+    temp_blue = color_temp.getBlue();
 
     bool done_red = false;
     bool done_green = false;
     bool done_blue = false;
 
     while(!(done_red & done_green & done_blue)){
-      if (color_temp.get_red() > color_to_normalize_to.get_red()) {
+      if (color_temp.getRed() > color_to_normalize_to.getRed()) {
             temp_red --;
-        } else if (color_temp.get_red() < color_to_normalize_to.get_red()) {
+        } else if (color_temp.getRed() < color_to_normalize_to.getRed()) {
             temp_red ++;
         } else{
           done_red = true;
         }
 
-        if (color_temp.get_green() > color_to_normalize_to.get_green()) {
+        if (color_temp.getGreen() > color_to_normalize_to.getGreen()) {
             temp_green --;
-        } else if (color_temp.get_green() < color_to_normalize_to.get_green()) {
+        } else if (color_temp.getGreen() < color_to_normalize_to.getGreen()) {
             temp_green ++;
         } else{
           done_green = true;
         }
 
 
-        if (color_temp.get_blue() > color_to_normalize_to.get_blue()) {
+        if (color_temp.getBlue() > color_to_normalize_to.getBlue()) {
             temp_blue --;
-        } else if (color_temp.get_blue() < color_to_normalize_to.get_blue()) {
+        } else if (color_temp.getBlue() < color_to_normalize_to.getBlue()) {
             temp_blue ++;
         } else{
           done_blue = true;
         }
 
-        color_temp.set_color(temp_red, temp_green, temp_blue);
+        color_temp.setColor(temp_red, temp_green, temp_blue);
         delay(delaytime);
-        controller.set_led(color_temp);
+        controller.setLED(color_temp);
    }
 
 }
 
-void Effect::cycle_rgb(unsigned short int delaytime){
-    normalize_to_color(E_OFF, E_RED,delaytime);
-    normalize_to_color(E_RED, E_GREEN,delaytime);
-    normalize_to_color(E_GREEN, E_BLUE,delaytime);
-    normalize_to_color(E_BLUE, E_OFF,delaytime);
+void Effect::cycleRGB(unsigned short int delaytime){
+    normalizeToColor(E_OFF, E_RED,delaytime);
+    normalizeToColor(E_RED, E_GREEN,delaytime);
+    normalizeToColor(E_GREEN, E_BLUE,delaytime);
+    normalizeToColor(E_BLUE, E_OFF,delaytime);
 }
 
-void Effect::cycly_rgb(void){
-  cycle_rgb(5);
+void Effect::cycleRGB(void){
+  cycleRGB(5);
 }

@@ -9,16 +9,16 @@ private:
     float temp_red;
     float temp_green;
     float temp_blue;
-    
+
 
 public:
     Effect (void);
 
-    void set_controller(LEDController &controller);
+    void setController(LEDController &controller);
     void flash (Color color, unsigned short int delaytime);
-    void normalize_to_color(Color color_temp, Color color_to_normalize_to, unsigned short int delaytime);
-    void cycle_rgb(unsigned short int delaytime);
-    void bright_up(Color &color_temp);
-    void bright_down(Color &color_temp);
-    void cycly_rgb(void);
+    void normalizeToColor(Color color_temp, Color color_to_normalize_to, unsigned short int delaytime);
+    void cycleRGB(unsigned short int delaytime);
+    void increaseBrightness(Color &color_temp);
+    void decreaseBrightness(Color &color_temp);
+    void cycleRGB(void);
 };

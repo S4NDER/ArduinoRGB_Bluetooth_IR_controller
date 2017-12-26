@@ -9,13 +9,13 @@ LEDController::LEDController (void){
     pinMode(PIN_BLUE, OUTPUT);
 }
 
-void LEDController::set_led(Color color){
+void LEDController::setLED(Color color){
     if(turnedOn){
       #ifdef COMMON_ANODE
       //map(...) is used for PWM because otherwise off = x < 128 and on = x > 128
-          float red = MAX_SCALE    - map(color.get_red(), MIN_SCALE, MAX_SCALE, MIN_SCALE, MAX_SCALE);
-          float green = MAX_SCALE  - map(color.get_green(), MIN_SCALE, MAX_SCALE, MIN_SCALE, MAX_SCALE);
-          float blue = MAX_SCALE   - map(color.get_blue(), MIN_SCALE, MAX_SCALE, MIN_SCALE, MAX_SCALE);
+          float red = MAX_SCALE    - map(color.getRed(), MIN_SCALE, MAX_SCALE, MIN_SCALE, MAX_SCALE);
+          float green = MAX_SCALE  - map(color.getGreen(), MIN_SCALE, MAX_SCALE, MIN_SCALE, MAX_SCALE);
+          float blue = MAX_SCALE   - map(color.getBlue(), MIN_SCALE, MAX_SCALE, MIN_SCALE, MAX_SCALE);
       #endif
       analogWrite(PIN_RED, red);
       analogWrite(PIN_GREEN, green);
@@ -27,10 +27,14 @@ void LEDController::set_led(Color color){
     }
 }
 
-void LEDController::turn_on(void){
+void LEDController::turnOn(void){
   turnedOn = true;
 }
 
-void LEDController::turn_off(void){
+void LEDController::turnOff(void){
   turnedOn = false;
+}
+
+bool LEDController::getPowerState(void){
+    return turnedOn;
 }

@@ -11,5 +11,4 @@ public:
     HC06 (void);
     void init(void);
     String getInput(void);
-    //char getData(void);
 };

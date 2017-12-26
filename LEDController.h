@@ -11,10 +11,11 @@
 class LEDController {
 public:
     LEDController (void);
-    void set_led(Color color);
-    void turn_on(void);
-    void turn_off(void);
-    
+    void setLED(Color color);
+    void turnOn(void);
+    void turnOff(void);
+    bool getPowerState(void);
+
 private:
   bool turnedOn = true;
 };

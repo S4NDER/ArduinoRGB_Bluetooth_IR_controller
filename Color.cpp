@@ -4,39 +4,39 @@
 #define COMMON_ANODE
 
 Color::Color (void){
-    set_color(255,0,0);
+    setColor(255,0,0);
 }
 
 Color::Color (float red, float green, float blue){
-    set_color(red, green, blue);
+    setColor(red, green, blue);
 }
 
-void Color::set_color (float red, float green, float blue){
-    set_red(red);
-    set_green(green);
-    set_blue(blue);
+void Color::setColor (float red, float green, float blue){
+    setRed(red);
+    setGreen(green);
+    setBlue(blue);
 }
 
-void Color::set_red(float red){
+void Color::setRed(float red){
     this->red = red;
 }
 
-void Color::set_green(float green){
+void Color::setGreen(float green){
     this->green = green;
 }
 
-void Color::set_blue(float blue){
+void Color::setBlue(float blue){
     this->blue = blue;
 }
 
-float Color::get_red(void){
+float Color::getRed(void){
     return red;
 }
 
-float Color::get_green(void){
+float Color::getGreen(void){
     return green;
 }
 
-float Color::get_blue(void){
+float Color::getBlue(void){
     return blue;
 }
