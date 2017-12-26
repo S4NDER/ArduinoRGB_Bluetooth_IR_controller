@@ -8,7 +8,6 @@ CommandProcessor::CommandProcessor (void){
 
 void CommandProcessor::setInputCommand(unsigned long inputCommand){
     this->inputCommand = inputCommand;
-    Serial.println(inputCommand);
 }
 
 void CommandProcessor::setRGBColor(unsigned char red, unsigned char green, unsigned char blue){
@@ -42,7 +41,7 @@ void CommandProcessor::processCommand (void){
             case IR_BRIGHT_DOWN: effect.decreaseBrightness(color); inputCommand = 0; break;
             case IR_OFF: controller.turnOff(); controller.setLED(color); break;
             case IR_ON: controller.turnOn(); controller.setLED(color); break;
-            case IR_STROBE: effect.flash(color, 200); break;
+            case IR_STROBE: effect.flash(color, delayTime); break;
             case IR_FLASH:
                 switch (flashCounter) {
                     case 0: color.WHITE; break;
@@ -67,6 +66,7 @@ void CommandProcessor::processCommand (void){
             } else{
                 flashCounter = 0;
             }
+            Serial.println(delayTime);
             delay(delayTime);
             break;
 
