@@ -16,6 +16,7 @@ private:
     bool beatsEnabled;
     bool isChanged = true;
     bool rgbInput = false;
+    bool isDelay = false;
 
     bool findText(String word, String text);
 
@@ -30,4 +31,5 @@ public:
     bool getBeatEnabled (void);
     bool hasChanged (void);
     bool hasRGBInput (void);
+    bool hasDelay(void);
 };

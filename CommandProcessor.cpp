@@ -15,6 +15,10 @@ void CommandProcessor::setRGBColor(unsigned char red, unsigned char green, unsig
     color.setColor(red, green, blue);
 }
 
+void CommandProcessor::setDelay(unsigned char delayTime){
+    this->delayTime = delayTime;
+}
+
 void CommandProcessor::processCommand (void){
     if ((controller.getPowerState()) || (inputCommand == IR_ON)) {
         switch (inputCommand) {
@@ -63,7 +67,7 @@ void CommandProcessor::processCommand (void){
             } else{
                 flashCounter = 0;
             }
-            delay(200);
+            delay(delayTime);
             break;
 
             case IR_FADE:
@@ -110,6 +114,7 @@ void CommandProcessor::processCommand (void){
                 }
             }
             color.setColor(rgb_red,rgb_green, rgb_blue);
+            delay(delayTime);
             break;
 
             case IR_SMOOTH:
@@ -120,7 +125,7 @@ void CommandProcessor::processCommand (void){
               } else{
                 brightnessCounter ++;
                 effect.decreaseBrightness(color);
-                delay(100);
+                delay(delayTime);
               }
             }
             if(!doneBrightUp){
@@ -130,7 +135,7 @@ void CommandProcessor::processCommand (void){
               } else{
                 brightnessCounter --;
                 effect.increaseBrightness(color);
-                delay(100);
+                delay(delayTime);
               }
             }
             break;

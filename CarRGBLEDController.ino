@@ -52,6 +52,10 @@ void processBT(){
         commandProcessor.setInputCommand(BT_COMMAND);
         commandProcessor.setRGBColor(jsonDecoder.getValueRed(), jsonDecoder.getValueGreen(), jsonDecoder.getValueBlue());
     }
+    if(jsonDecoder.hasDelay()){
+        commandProcessor.setInputCommand(BT_COMMAND);
+        commandProcessor.setDelay(jsonDecoder.getValueDelay());
+    }
 }
 
 void processIR(){

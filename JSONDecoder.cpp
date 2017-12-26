@@ -28,6 +28,8 @@ void JSONDecoder::decodeString(String input){
         }
         if(findText("delay", input)){
             delayTime = root["delay"];
+            Serial.println(delayTime);
+            isDelay = true;
         }
         if(findText("ir_val", input)){
             String tempIRCode = root["ir_val"];
@@ -44,10 +46,10 @@ void JSONDecoder::decodeString(String input){
         if(findText("beats", input)){
             beatsEnabled = root["beats"];
         }
-        Serial.println(beatsEnabled);
     } else {
       isChanged = false;
       rgbInput = false;
+      isDelay = false;
     }
 }
 
@@ -81,6 +83,10 @@ bool JSONDecoder::hasChanged (void){
 
 bool JSONDecoder::hasRGBInput (void){
     return rgbInput;
+}
+
+bool JSONDecoder::hasDelay(void){
+    return isDelay;
 }
 
 bool JSONDecoder::findText(String word, String text) {
