@@ -8,7 +8,7 @@ public:
     Microphone (void);
     void init(void);
     float getMicLevel(void);
-    float getBassLevel(void);
+    bool hasBass(void);
 
 public:
     float getFilterFrequency(void);

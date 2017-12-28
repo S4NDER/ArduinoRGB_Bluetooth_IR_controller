@@ -3,7 +3,7 @@
 #include <Filters.h>
 
 #define INPUT_PIN 0
-#define BASS_THRESHOLD 272
+#define BASS_THRESHOLD 200
 
 Microphone::Microphone (void){
     init();
@@ -18,11 +18,11 @@ float Microphone::getMicLevel(void){
     return lowPassFilter.input(analogRead(INPUT_PIN));
 }
 
-float Microphone::getBassLevel(void){
+bool Microphone::hasBass(void){
     if(getMicLevel() > BASS_THRESHOLD){
-        return getMicLevel();
+        return true;
     }
-    return 0;
+    return false;
 }
 
 float Microphone::getFilterFrequency(void){

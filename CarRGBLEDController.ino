@@ -15,6 +15,7 @@ HC06 hc06;
 
 Thread thIR = Thread();
 Thread thBT = Thread();
+Thread thMic = Thread();
 Thread thProcessInputCommand = Thread();
 
 void setup() {
@@ -29,6 +30,9 @@ void setup() {
     thBT.setInterval(10);
     thBT.onRun(processBT);
 
+    thMic.setInterval(5);
+    thMic.onRun(processMic);
+
     thProcessInputCommand.setInterval(10);
     thProcessInputCommand.onRun(processInputCommand);
 }
@@ -36,6 +40,7 @@ void setup() {
 void loop() {
     thIR.run();
     thBT.run();
+    thMic.run();
     thProcessInputCommand.run();
 }
 
@@ -60,6 +65,14 @@ void processIR(){
     irReceiver.receiveCode();
     if(irReceiver.hasChanged())
         commandProcessor.setInputCommand(irReceiver.getIRValue());
+}
+
+void processMic() {
+  if(jsonDecoder.getBeatEnabled()){
+      if(microphone.hasBass()){
+          commandProcessor.setInputCommand(MIC_FLASH);
+      }
+  }
 }
 
 void processInputCommand(){
