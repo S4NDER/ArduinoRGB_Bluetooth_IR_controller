@@ -41,7 +41,7 @@ The Arduino expects the following JSON objects (ex.):
 {"delay":356}
 ```
 ```json
-{"beat":true}
+{"beats":true}
 ```
 Feel free to clone the Android app I made for this project. It can be found [here](https://github.com/S4NDER/RGBArduinoApp).
 It has the same funtionality like an IR remote with some extra features.
