@@ -6,11 +6,6 @@ class Effect {
 private:
     LEDController controller;
 
-    float temp_red;
-    float temp_green;
-    float temp_blue;
-
-
 public:
     Effect (void);
 

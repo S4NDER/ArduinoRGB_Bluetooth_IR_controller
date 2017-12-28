@@ -21,9 +21,9 @@ void Effect::flash (Color color, unsigned short int delaytime){
     delay(delaytime);
 }
 void Effect::increaseBrightness(Color &color_temp){
-    temp_red = color_temp.getRed();
-    temp_green = color_temp.getGreen();
-    temp_blue = color_temp.getBlue();
+    float temp_red = color_temp.getRed();
+    float temp_green = color_temp.getGreen();
+    float temp_blue = color_temp.getBlue();
 
     if(color_temp.getRed()*1.1 <= 255.00){
       temp_red = color_temp.getRed()*1.1;
@@ -48,6 +48,10 @@ void Effect::increaseBrightness(Color &color_temp){
 }
 
 void Effect::decreaseBrightness(Color &color_temp){
+    float temp_red = color_temp.getRed();
+    float temp_green = color_temp.getGreen();
+    float temp_blue = color_temp.getBlue();
+
     if(color_temp.getRed()/1.1 > 5){
       temp_red = color_temp.getRed()/1.1;
     }
@@ -71,9 +75,9 @@ void Effect::decreaseBrightness(Color &color_temp){
 }
 
 void Effect::normalizeToColor(Color color_temp, Color color_to_normalize_to, unsigned short int delaytime){
-    temp_red = color_temp.getRed();
-    temp_green = color_temp.getGreen();
-    temp_blue = color_temp.getBlue();
+    float temp_red = color_temp.getRed();
+    float temp_green = color_temp.getGreen();
+    float temp_blue = color_temp.getBlue();
 
     bool done_red = false;
     bool done_green = false;
