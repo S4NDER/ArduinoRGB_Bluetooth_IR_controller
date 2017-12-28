@@ -1,7 +1,4 @@
 #include "Color.h"
-#include "Arduino.h"
-
-#define COMMON_ANODE
 
 Color::Color (void){
     setColor(255,0,0);

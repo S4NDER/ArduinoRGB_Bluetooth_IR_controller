@@ -5,9 +5,7 @@
 #include "CommandProcessor.h"
 #include "Defines.h"
 
-#include <StaticThreadController.h>
 #include <Thread.h>
-#include <ThreadController.h>
 
 CommandProcessor commandProcessor;
 JSONDecoder jsonDecoder;
