@@ -25,12 +25,12 @@ private:
     bool doneBrightDown = false;
 
     unsigned char flashCounter = 0;
-    unsigned char delayTime = 10;
+    unsigned short int delayTime = 10;
 
 public:
     CommandProcessor (void);
     void processCommand (void);
     void setInputCommand(unsigned long inputCommand);
     void setRGBColor(unsigned char red, unsigned char green, unsigned char blue);
-    void setDelay(unsigned char delayTime);
+    void setDelay(unsigned short int delayTime);
 };

@@ -14,7 +14,7 @@ void CommandProcessor::setRGBColor(unsigned char red, unsigned char green, unsig
     color.setColor(red, green, blue);
 }
 
-void CommandProcessor::setDelay(unsigned char delayTime){
+void CommandProcessor::setDelay(unsigned short int delayTime){
     this->delayTime = delayTime;
 }
 
@@ -66,7 +66,6 @@ void CommandProcessor::processCommand (void){
             } else{
                 flashCounter = 0;
             }
-            Serial.println(delayTime);
             delay(delayTime);
             break;
 
