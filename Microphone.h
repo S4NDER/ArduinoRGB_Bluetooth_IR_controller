@@ -2,7 +2,7 @@
 
 class Microphone {
 private:
-    float filterFrequency = 500;
+    float filterFrequency = 1500;
 
 public:
     Microphone (void);
