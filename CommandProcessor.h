@@ -25,7 +25,7 @@ private:
     bool doneBrightDown = false;
 
     unsigned char flashCounter = 0;
-    unsigned short int delayTime = 10;
+    unsigned short int delayTime = 100;
 
 public:
     CommandProcessor (void);

@@ -41,7 +41,7 @@ void CommandProcessor::processCommand (void){
             case IR_BRIGHT_DOWN: effect.decreaseBrightness(color); inputCommand = 0; break;
             case IR_OFF: controller.turnOff(); controller.setLED(color); break;
             case IR_ON: controller.turnOn(); controller.setLED(color); break;
-            case IR_STROBE: effect.flash(color, delayTime); break;
+            case IR_STROBE: effect.flash(color, delayTime*1.5); break;
             case IR_FLASH:
                 switch (flashCounter) {
                     case 0: color.WHITE; break;
@@ -66,7 +66,7 @@ void CommandProcessor::processCommand (void){
             } else{
                 flashCounter = 0;
             }
-            delay(delayTime);
+            delay(delayTime*2);
             break;
 
             case IR_FADE:
