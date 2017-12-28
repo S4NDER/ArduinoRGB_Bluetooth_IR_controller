@@ -54,6 +54,7 @@ It has the same funtionality like an IR remote with some extra features.
 * [ArduinoJSON](https://github.com/bblanchon/ArduinoJson) - To parse data
 * [IRLib2](https://github.com/cyborg5/IRLib2) - To receive IR signals
 * [ArduinoThread](https://github.com/ivanseidel/ArduinoThread) - Tasking the different devices
+* [Filters](https://github.com/JonHub/Filters) - DSP filters used for bassdetection
 
 ## Authors
 * **Sander Jansen** - *Writing the whole driver* - [S4NDER](https://github.com/S4NDER)
