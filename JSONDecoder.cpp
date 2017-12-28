@@ -6,44 +6,45 @@ JSONDecoder::JSONDecoder (void){
 
 void JSONDecoder::decodeString(String input){
     if (input.charAt(input.length()-1) == '}') {
-        char data[DATA_BUFFER];
-        for (unsigned short int i = 0; i < input.length(); i++) {
-            data[i] = input[i];
-        }
+        const char *data = input.c_str();
+
         StaticJsonBuffer<JSON_BUFFER> jsonBuffer;
         JsonObject& root = jsonBuffer.parseObject(data);
         jsonBuffer.clear();
-
-        if(findText("red", input)){
+        char * output = NULL;
+        output = strstr(data, "red");
+        if(output){
             red = root["red"];
             rgbInput = true;
         }
-        if(findText("green", input)){
+        output = strstr(data,"green");
+        if(output){
             green = root["green"];
             rgbInput = true;
         }
-        if(findText("blue", input)){
+        output = strstr(data,"blue");
+        if(output){
             blue = root["blue"];
             rgbInput = true;
         }
-        if(findText("delay", input)){
+        output = strstr(data,"delay");
+        if(output){
             delayTime = root["delay"];
             Serial.println(delayTime);
             isDelay = true;
         }
-        if(findText("ir_val", input)){
+        output = strstr(data,"ir_val");
+        if(output){
             String tempIRCode = root["ir_val"];
-            char chTempIRCode[128];
-            for (unsigned char i = 0; i < tempIRCode.length(); i++) {
-                chTempIRCode[i] = tempIRCode[i];
-            }
+            const char *chTempIRCode = tempIRCode.c_str();
             if (tempIRCode.length() > 7) {
                 sscanf(chTempIRCode,"%lX", &valueIRCode);
                 isChanged = true;
                 rgbInput = false;
             }
         }
-        if(findText("beats", input)){
+        output = strstr(data,"beats");
+        if(output){
             beatsEnabled = root["beats"];
         }
     } else {
@@ -87,13 +88,4 @@ bool JSONDecoder::hasRGBInput (void){
 
 bool JSONDecoder::hasDelay(void){
     return isDelay;
-}
-
-bool JSONDecoder::findText(String word, String text) {
-  for (int i = 0; i <= text.length() - word.length(); i++) {
-    if (text.substring(i,word.length()+i) == word) {
-      return true;
-    }
-  }
-  return false;
 }

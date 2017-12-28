@@ -18,8 +18,6 @@ private:
     bool rgbInput = false;
     bool isDelay = false;
 
-    bool findText(String word, String text);
-
 public:
     JSONDecoder (void);
     void decodeString (String input);

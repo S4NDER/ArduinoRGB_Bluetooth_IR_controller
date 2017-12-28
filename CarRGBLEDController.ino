@@ -53,6 +53,7 @@ void processBT(){
     if(jsonDecoder.hasDelay()){
         commandProcessor.setDelay(jsonDecoder.getValueDelay());
     }
+
 }
 
 void processIR(){
