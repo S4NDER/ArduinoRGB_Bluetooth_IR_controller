@@ -23,7 +23,7 @@ void setup() {
     irReceiver.init();
     microphone.init();
     microphone.setBassThreshold(265);
-    microphone.setFilterFrequency(250);
+    //microphone.setFilterFrequency(250);
     hc06.init();
 
     thIR.setInterval(2);
