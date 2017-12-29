@@ -13,12 +13,14 @@ void Microphone::init(void){
 }
 
 float Microphone::getMicLevel(void){
-    FilterOnePole lowPassFilter (LOWPASS, filterFrequency);
-    return lowPassFilter.input(analogRead(INPUT_PIN));
+    //FilterOnePole lowPassFilter (LOWPASS, filterFrequency);
+    return analogRead(INPUT_PIN);
 }
 
 bool Microphone::hasBass(void){
-    if(getMicLevel() > bassThreshold){
+    float miclevel = getMicLevel();
+    if(miclevel >= bassThreshold){
+        Serial.println(miclevel);
         return true;
     }
     return false;
