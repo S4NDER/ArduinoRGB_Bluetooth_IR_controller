@@ -1,4 +1,6 @@
 #include "IRDecoder.h"
+#include "Defines.h"
+#include "JSONDecoder.h"
 
 IRDecoder::IRDecoder (void){
     init();
@@ -23,6 +25,10 @@ void IRDecoder::receiveCode(void){
             return;
         } else{
             irCode = decoder.value;
+            if((irCode == IR_ON)&&(prevCode == IR_ON)){
+                JSONDecoder::beatsEnabled = !JSONDecoder::beatsEnabled;
+            }
+            prevCode = irCode;
             isChanged = true;
         }
     } else {

@@ -1,5 +1,7 @@
 #include "JSONDecoder.h"
 
+bool JSONDecoder::beatsEnabled = false;
+
 JSONDecoder::JSONDecoder (void){
 
 }

@@ -13,7 +13,6 @@ private:
     unsigned char blue;
     unsigned short int delayTime;
     unsigned long valueIRCode = IR_RED;
-    bool beatsEnabled;
     bool isChanged = true;
     bool rgbInput = false;
     bool isDelay = false;
@@ -30,4 +29,6 @@ public:
     bool hasChanged (void);
     bool hasRGBInput (void);
     bool hasDelay(void);
+public:
+    static bool beatsEnabled;
 };

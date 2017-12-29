@@ -12,6 +12,8 @@ private:
     IRrecvPCI receiver = IRrecvPCI(2);
     unsigned long irCode = 0;
     bool isChanged = true;
+    bool beatsEnabled = false;
+    unsigned long prevCode = 0;
 
 public:
     IRDecoder (void);
