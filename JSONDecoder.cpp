@@ -48,9 +48,9 @@ void JSONDecoder::decodeString(String input){
             beatsEnabled = root["beats"];
         }
     } else {
-      isChanged = false;
-      rgbInput = false;
-      isDelay = false;
+        isChanged = false;
+        rgbInput = false;
+        isDelay = false;
     }
 }
 

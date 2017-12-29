@@ -32,7 +32,7 @@ void setup() {
     thBT.setInterval(10);
     thBT.onRun(processBT);
 
-    thMic.setInterval(5);
+    thMic.setInterval(2);
     thMic.onRun(processMic);
 
     thProcessInputCommand.setInterval(10);
@@ -50,7 +50,7 @@ void processBT(){
     jsonDecoder.decodeString(hc06.getInput());
     if (jsonDecoder.hasChanged()) {
         if( jsonDecoder.getValueIRCode() > 0 ){
-          commandProcessor.setInputCommand(jsonDecoder.getValueIRCode());
+            commandProcessor.setInputCommand(jsonDecoder.getValueIRCode());
         }
     }
     if (jsonDecoder.hasRGBInput()) {
@@ -60,21 +60,20 @@ void processBT(){
     if(jsonDecoder.hasDelay()){
         commandProcessor.setDelay(jsonDecoder.getValueDelay());
     }
-
 }
 
 void processIR(){
     irReceiver.receiveCode();
     if(irReceiver.hasChanged())
-        commandProcessor.setInputCommand(irReceiver.getIRValue());
+    commandProcessor.setInputCommand(irReceiver.getIRValue());
 }
 
 void processMic() {
-  if(jsonDecoder.getBeatEnabled()){
-      if(microphone.hasBass()){
-          commandProcessor.bassFlicker();
-      }
-  }
+    if(jsonDecoder.getBeatEnabled()){
+        if(microphone.hasBass()){
+            commandProcessor.bassFlicker();
+        }
+    }
 }
 
 void processInputCommand(){

@@ -19,11 +19,11 @@ void IRDecoder::receiveCode(void){
         decodeData();
         startReceiver();
         if((decoder.value == 4294967295) || (decoder.value == 0)){
-          isChanged = false;
-          return;
+            isChanged = false;
+            return;
         } else{
-          irCode = decoder.value;
-          isChanged = true;
+            irCode = decoder.value;
+            isChanged = true;
         }
     } else {
         isChanged = false;
@@ -35,7 +35,7 @@ void IRDecoder::decodeData(void){
 }
 
 unsigned long IRDecoder::getIRValue(void){
-  return irCode;
+    return irCode;
 }
 
 bool IRDecoder::hasChanged(void){

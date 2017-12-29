@@ -17,5 +17,5 @@ public:
     bool getPowerState(void);
 
 private:
-  bool turnedOn = true;
+    bool turnedOn = true;
 };
