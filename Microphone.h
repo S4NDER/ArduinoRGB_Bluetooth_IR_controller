@@ -3,6 +3,7 @@
 class Microphone {
 private:
     float filterFrequency = 1500;
+    unsigned short int bassThreshold = 172;
 
 public:
     Microphone (void);
@@ -13,5 +14,6 @@ public:
 public:
     float getFilterFrequency(void);
     void setFilterFrequency(float filterFrequency);
+    void setBassThreshold(unsigned short int bassThreshold);
 
 };

@@ -3,7 +3,6 @@
 #include <Filters.h>
 
 #define INPUT_PIN 0
-#define BASS_THRESHOLD 200
 
 Microphone::Microphone (void){
     init();
@@ -19,7 +18,8 @@ float Microphone::getMicLevel(void){
 }
 
 bool Microphone::hasBass(void){
-    if(getMicLevel() > BASS_THRESHOLD){
+    Serial.println(getMicLevel());
+    if(getMicLevel() > bassThreshold){
         return true;
     }
     return false;
@@ -31,4 +31,8 @@ float Microphone::getFilterFrequency(void){
 
 void Microphone::setFilterFrequency(float filterFrequency){
     this->filterFrequency = filterFrequency;
+}
+
+void Microphone::setBassThreshold(unsigned short int bassThreshold){
+    this->bassThreshold = bassThreshold;
 }

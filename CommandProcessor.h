@@ -33,4 +33,5 @@ public:
     void setInputCommand(unsigned long inputCommand);
     void setRGBColor(unsigned char red, unsigned char green, unsigned char blue);
     void setDelay(unsigned short int delayTime);
+    void bassFlicker(void);
 };

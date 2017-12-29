@@ -22,6 +22,8 @@ void setup() {
     Serial.begin(9600);
     irReceiver.init();
     microphone.init();
+    microphone.setBassThreshold(166);
+    microphone.setFilterFrequency(1400);
     hc06.init();
 
     thIR.setInterval(2);
@@ -70,7 +72,7 @@ void processIR(){
 void processMic() {
   if(jsonDecoder.getBeatEnabled()){
       if(microphone.hasBass()){
-          commandProcessor.setInputCommand(MIC_FLASH);
+          commandProcessor.bassFlicker();
       }
   }
 }

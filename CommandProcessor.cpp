@@ -18,6 +18,9 @@ void CommandProcessor::setDelay(unsigned short int delayTime){
     this->delayTime = delayTime;
 }
 
+void CommandProcessor::bassFlicker(void){
+    effect.flash(color, 25);
+}
 void CommandProcessor::processCommand (void){
     if ((controller.getPowerState()) || (inputCommand == IR_ON)) {
         switch (inputCommand) {
@@ -42,7 +45,6 @@ void CommandProcessor::processCommand (void){
             case IR_OFF: controller.turnOff(); controller.setLED(color); break;
             case IR_ON: controller.turnOn(); controller.setLED(color); break;
             case IR_STROBE: effect.flash(color, delayTime*1.5); break;
-            case MIC_FLASH: controller.turnOff(); controller.setLED(color); delay(25); controller.turnOn(); controller.setLED(color); inputCommand = BT_COMMAND; break;
             case IR_FLASH:
                 switch (flashCounter) {
                     case 0: color.WHITE; break;
