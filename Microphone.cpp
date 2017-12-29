@@ -18,7 +18,6 @@ float Microphone::getMicLevel(void){
 }
 
 bool Microphone::hasBass(void){
-    Serial.println(getMicLevel());
     if(getMicLevel() > bassThreshold){
         return true;
     }
