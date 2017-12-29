@@ -22,7 +22,7 @@ void setup() {
     Serial.begin(9600);
     irReceiver.init();
     microphone.init();
-    microphone.setBassThreshold(265.50);
+    microphone.setBassThreshold(262);
     //microphone.setFilterFrequency(250);
     hc06.init();
 

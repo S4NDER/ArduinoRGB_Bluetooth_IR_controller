@@ -19,7 +19,9 @@ void CommandProcessor::setDelay(unsigned short int delayTime){
 }
 
 void CommandProcessor::bassFlicker(void){
-    effect.flash(color, 25);
+    if (controller.getPowerState()) {
+        effect.flash(color, 25);
+    }
 }
 void CommandProcessor::processCommand (void){
     if ((controller.getPowerState()) || (inputCommand == IR_ON)) {
