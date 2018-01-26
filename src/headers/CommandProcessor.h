@@ -5,6 +5,8 @@
 #include "Color.h"
 #include "Effect.h"
 
+namespace ArduinoRGB{
+
 class CommandProcessor {
 private:
     LEDController controller;
@@ -34,4 +36,5 @@ public:
     void setRGBColor(unsigned char red, unsigned char green, unsigned char blue);
     void setDelay(unsigned short int delayTime);
     void bassFlicker(void);
+};
 };

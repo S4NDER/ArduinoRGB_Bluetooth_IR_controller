@@ -3,14 +3,17 @@
 
 #define COMMON_ANODE
 
+namespace ArduinoRGB{
+
 LEDController::LEDController (void){
     pinMode(PIN_RED, OUTPUT);
     pinMode(PIN_GREEN, OUTPUT);
     pinMode(PIN_BLUE, OUTPUT);
+
 }
 
 void LEDController::setLED(Color color){
-    if(turnedOn){
+    if(powerSwitch.getState()){
         #ifdef COMMON_ANODE
         //map(...) is used for PWM because otherwise off = x < 128 and on = x > 128
         float red = MAX_SCALE    - map(color.getRed(), MIN_SCALE, MAX_SCALE, MIN_SCALE, MAX_SCALE);
@@ -26,15 +29,4 @@ void LEDController::setLED(Color color){
         analogWrite(PIN_BLUE, MAX_SCALE);
     }
 }
-
-void LEDController::turnOn(void){
-    turnedOn = true;
-}
-
-void LEDController::turnOff(void){
-    turnedOn = false;
-}
-
-bool LEDController::getPowerState(void){
-    return turnedOn;
-}
+};

@@ -2,6 +2,8 @@
 #include "Color.h"
 #include "LEDController.h"
 
+namespace ArduinoRGB{
+
 class Effect {
 private:
     LEDController controller;
@@ -16,4 +18,5 @@ public:
     void increaseBrightness(Color &color_temp);
     void decreaseBrightness(Color &color_temp);
     void cycleRGB(void);
+};
 };

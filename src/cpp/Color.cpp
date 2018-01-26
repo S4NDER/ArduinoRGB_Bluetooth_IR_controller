@@ -1,5 +1,7 @@
 #include "../headers/Color.h"
 
+namespace ArduinoRGB{
+
 Color::Color (void){
     setColor(255,0,0);
 }
@@ -37,3 +39,4 @@ float Color::getGreen(void){
 float Color::getBlue(void){
     return blue;
 }
+};

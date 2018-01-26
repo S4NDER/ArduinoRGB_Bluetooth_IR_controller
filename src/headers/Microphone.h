@@ -1,5 +1,7 @@
 #pragma once
 
+namespace ArduinoRGB{
+
 class Microphone {
 private:
     float filterFrequency = 1500;
@@ -16,4 +18,5 @@ public:
     void setFilterFrequency(float filterFrequency);
     void setBassThreshold(unsigned short int bassThreshold);
 
+};
 };

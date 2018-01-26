@@ -4,6 +4,8 @@
 
 #define INPUT_PIN 0
 
+namespace ArduinoRGB{
+
 Microphone::Microphone (void){
     init();
 }
@@ -37,3 +39,4 @@ void Microphone::setFilterFrequency(float filterFrequency){
 void Microphone::setBassThreshold(unsigned short int bassThreshold){
     this->bassThreshold = bassThreshold;
 }
+};

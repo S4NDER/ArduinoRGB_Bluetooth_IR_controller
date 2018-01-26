@@ -7,6 +7,7 @@
 
 #include <Thread.h>
 
+using namespace ArduinoRGB;
 CommandProcessor commandProcessor;
 JSONDecoder jsonDecoder;
 Microphone microphone;

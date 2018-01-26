@@ -6,6 +6,8 @@
 #include <IRLibCombo.h>
 #include <IRLibRecvPCI.h>
 
+namespace ArduinoRGB{
+
 class IRDecoder {
 private:
     IRdecode decoder;
@@ -25,4 +27,5 @@ public:
 private:
     void startReceiver(void);
     void decodeData(void);
+};
 };

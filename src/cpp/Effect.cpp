@@ -6,6 +6,8 @@
 #define E_BLUE Color(0,0,255)
 #define E_OFF Color(0,0,0)
 
+namespace ArduinoRGB{
+
 Effect::Effect(void){
     this->controller = controller;
 }
@@ -126,3 +128,4 @@ void Effect::cycleRGB(unsigned short int delaytime){
 void Effect::cycleRGB(void){
     cycleRGB(5);
 }
+};

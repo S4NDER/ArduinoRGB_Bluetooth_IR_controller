@@ -19,6 +19,8 @@
 #define PINK setColor(137, 0, 142)
 #define PURPLE setColor(255, 0, 142)
 
+namespace ArduinoRGB{
+
 class Color {
 private:
     float red;
@@ -39,4 +41,5 @@ private:
     void setRed(float red);
     void setGreen(float green);
     void setBlue(float blue);
+};
 };

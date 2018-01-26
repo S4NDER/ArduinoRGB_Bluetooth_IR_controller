@@ -2,6 +2,8 @@
 #include "../headers/Defines.h"
 #include "../headers/JSONDecoder.h"
 
+namespace ArduinoRGB{
+
 IRDecoder::IRDecoder (void){
     init();
 }
@@ -47,3 +49,4 @@ unsigned long IRDecoder::getIRValue(void){
 bool IRDecoder::hasChanged(void){
     return isChanged;
 }
+};
