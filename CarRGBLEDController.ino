@@ -21,13 +21,12 @@ Thread thProcessInputCommand = Thread();
 
 
 void sendInterrupt(){
+    irReceiver.receiveCode();
+    //if(irReceiver.hasChanged())
+    commandProcessor.setInputCommand(irReceiver.getIRValue());
+    //commandProcessor.setInputCommand(0xF720DF);
     commandProcessor.effect.INTERRUPT;
     Serial.println("ISR");
-    irReceiver.receiveCode();
-    if(irReceiver.hasChanged())
-    commandProcessor.setInputCommand(irReceiver.getIRValue());
-    interrupted = true;
-    return;
 }
 
 void setup() {
