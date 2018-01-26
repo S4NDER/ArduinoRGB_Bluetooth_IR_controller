@@ -1,9 +1,9 @@
-#include "HC06.h"
-#include "Microphone.h"
-#include "IRDecoder.h"
-#include "JSONDecoder.h"
-#include "CommandProcessor.h"
-#include "Defines.h"
+#include "src/headers/HC06.h"
+#include "src/headers/Microphone.h"
+#include "src/headers/IRDecoder.h"
+#include "src/headers/JSONDecoder.h"
+#include "src/headers/CommandProcessor.h"
+#include "src/headers/Defines.h"
 
 #include <Thread.h>
 

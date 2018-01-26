@@ -1,4 +1,4 @@
-#include "HC06.h"
+#include "../headers/HC06.h"
 
 HC06::HC06 (void){
     init();

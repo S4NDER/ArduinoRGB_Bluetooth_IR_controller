@@ -1,4 +1,4 @@
-#include "JSONDecoder.h"
+#include "../headers/JSONDecoder.h"
 
 bool JSONDecoder::beatsEnabled = false;
 

@@ -1,4 +1,4 @@
-#include "Effect.h"
+#include "../headers/Effect.h"
 #include "Arduino.h"
 
 #define E_RED Color(255,0,0)

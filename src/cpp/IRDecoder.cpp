@@ -1,6 +1,6 @@
-#include "IRDecoder.h"
-#include "Defines.h"
-#include "JSONDecoder.h"
+#include "../headers/IRDecoder.h"
+#include "../headers/Defines.h"
+#include "../headers/JSONDecoder.h"
 
 IRDecoder::IRDecoder (void){
     init();

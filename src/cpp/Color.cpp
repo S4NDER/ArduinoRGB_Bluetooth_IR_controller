@@ -1,4 +1,4 @@
-#include "Color.h"
+#include "../headers/Color.h"
 
 Color::Color (void){
     setColor(255,0,0);
