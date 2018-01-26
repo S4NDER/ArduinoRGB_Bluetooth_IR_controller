@@ -84,8 +84,8 @@ void Effect::normalizeToColor(Color color_temp, Color color_to_normalize_to, uns
     bool done_red = false;
     bool done_green = false;
     bool done_blue = false;
-
     while(!(done_red & done_green & done_blue)){
+        if(!interrupted){
         if (color_temp.getRed() > color_to_normalize_to.getRed()) {
             temp_red --;
         } else if (color_temp.getRed() < color_to_normalize_to.getRed()) {
@@ -114,18 +114,25 @@ void Effect::normalizeToColor(Color color_temp, Color color_to_normalize_to, uns
         color_temp.setColor(temp_red, temp_green, temp_blue);
         delay(delaytime);
         controller.setLED(color_temp);
+    } else {
+        break;
+    }
     }
 
 }
 
 void Effect::cycleRGB(unsigned short int delaytime){
-    normalizeToColor(E_OFF, E_RED,delaytime);
-    normalizeToColor(E_RED, E_GREEN,delaytime);
-    normalizeToColor(E_GREEN, E_BLUE,delaytime);
-    normalizeToColor(E_BLUE, E_OFF,delaytime);
+    if(!interrupted) normalizeToColor(E_OFF, E_RED,delaytime);
+    if(!interrupted) normalizeToColor(E_RED, E_GREEN,delaytime);
+    if(!interrupted) normalizeToColor(E_GREEN, E_BLUE,delaytime);
+    if(!interrupted) normalizeToColor(E_BLUE, E_OFF,delaytime);
 }
 
 void Effect::cycleRGB(void){
     cycleRGB(5);
+}
+
+void Effect::interrupt(void){
+    interrupted = true;
 }
 };

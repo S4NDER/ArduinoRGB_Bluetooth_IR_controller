@@ -19,7 +19,15 @@ Thread thBT = Thread();
 Thread thMic = Thread();
 Thread thProcessInputCommand = Thread();
 
+
+void sendInterrupt(){
+    commandProcessor.effect.INTERRUPT;
+    Serial.println("Calling ISR");
+}
+
 void setup() {
+    attachInterrupt (digitalPinToInterrupt(2), sendInterrupt, CHANGE);
+    interrupts();
     Serial.begin(9600);
     irReceiver.init();
     microphone.init();

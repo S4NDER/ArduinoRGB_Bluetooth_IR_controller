@@ -11,7 +11,6 @@ class CommandProcessor {
 private:
     LEDController controller;
     Color color;
-    Effect effect;
 
     unsigned long inputCommand;
 
@@ -30,6 +29,7 @@ private:
     unsigned short int delayTime = 100;
 
 public:
+    Effect effect;
     CommandProcessor (void);
     void processCommand (void);
     void setInputCommand(unsigned long inputCommand);

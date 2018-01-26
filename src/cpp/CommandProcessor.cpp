@@ -76,6 +76,7 @@ void CommandProcessor::processCommand (void){
             break;
 
             case IR_FADE:
+            /*
             if(!rgb_red_done){
                 if(rgb_red == 255){
                     rgb_red_done = true;
@@ -120,6 +121,8 @@ void CommandProcessor::processCommand (void){
             }
             color.setColor(rgb_red,rgb_green, rgb_blue);
             delay(delayTime);
+            */
+            effect.cycleRGB(delayTime);
             break;
 
             case IR_SMOOTH:

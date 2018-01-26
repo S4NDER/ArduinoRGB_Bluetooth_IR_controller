@@ -2,11 +2,14 @@
 #include "Color.h"
 #include "LEDController.h"
 
+#define INTERRUPT interrupt()
+
 namespace ArduinoRGB{
 
 class Effect {
 private:
     LEDController controller;
+    bool interrupted;
 
 public:
     Effect (void);
@@ -18,5 +21,6 @@ public:
     void increaseBrightness(Color &color_temp);
     void decreaseBrightness(Color &color_temp);
     void cycleRGB(void);
+    void interrupt (void);
 };
 };
