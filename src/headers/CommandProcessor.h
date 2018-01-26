@@ -11,6 +11,7 @@ class CommandProcessor {
 private:
     LEDController controller;
     Color color;
+    Color prevColor;
     Effect effect;
 
     unsigned long inputCommand;

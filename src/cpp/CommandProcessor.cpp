@@ -43,6 +43,11 @@ void CommandProcessor::processCommand (void){
             case IR_DARK_PINK: color.DARK_PINK; break;
             case IR_PINK: color.PINK; break;
             case IR_PURPLE: color.PURPLE; break;
+        }
+        effect.normalizeToColor(prevColor, color, 1);
+
+
+        switch (inputCommand){
             case IR_BRIGHT_UP: effect.increaseBrightness(color); inputCommand = 0; break;
             case IR_BRIGHT_DOWN: effect.decreaseBrightness(color); inputCommand = 0; break;
             case IR_OFF: controller.powerSwitch.OFF; controller.setLED(color); break;
@@ -154,6 +159,7 @@ void CommandProcessor::processCommand (void){
             flashCounter = 0;
         }
         controller.setLED(color);
+        prevColor = color;
     }
 }
 };
