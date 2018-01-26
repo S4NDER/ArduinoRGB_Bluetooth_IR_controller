@@ -22,7 +22,8 @@ Thread thProcessInputCommand = Thread();
 
 void sendInterrupt(){
     commandProcessor.effect.INTERRUPT;
-    Serial.println("Calling ISR");
+    Serial.println("ISR");
+    return;
 }
 
 void setup() {
@@ -46,6 +47,7 @@ void setup() {
 
     thProcessInputCommand.setInterval(10);
     thProcessInputCommand.onRun(processInputCommand);
+    pinMode(2, INPUT);
 }
 
 void loop() {

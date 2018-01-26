@@ -5,13 +5,14 @@
 #include <IRLib_P01_NEC.h>
 #include <IRLibCombo.h>
 #include <IRLibRecvPCI.h>
+#include <IRLibRecv.h>
 
 namespace ArduinoRGB{
 
 class IRDecoder {
 private:
     IRdecode decoder;
-    IRrecvPCI receiver = IRrecvPCI(2);
+    IRrecv receiver = IRrecv(10);
     unsigned long irCode = 0;
     bool isChanged = true;
     bool beatsEnabled = false;
