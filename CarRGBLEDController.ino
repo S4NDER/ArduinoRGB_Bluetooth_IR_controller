@@ -13,7 +13,7 @@ JSONDecoder jsonDecoder;
 Microphone microphone;
 IRDecoder irReceiver;
 HC06 hc06;
-
+bool interrupted = false;
 Thread thIR = Thread();
 Thread thBT = Thread();
 Thread thMic = Thread();
@@ -23,6 +23,10 @@ Thread thProcessInputCommand = Thread();
 void sendInterrupt(){
     commandProcessor.effect.INTERRUPT;
     Serial.println("ISR");
+    irReceiver.receiveCode();
+    if(irReceiver.hasChanged())
+    commandProcessor.setInputCommand(irReceiver.getIRValue());
+    interrupted = true;
     return;
 }
 
@@ -51,6 +55,9 @@ void setup() {
 }
 
 void loop() {
+    if (interrupted) {
+        interrupted = false;
+    }
     thIR.run();
     thBT.run();
     thMic.run();
