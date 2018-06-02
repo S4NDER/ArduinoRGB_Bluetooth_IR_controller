@@ -42,8 +42,8 @@ void CommandProcessor::processCommand (void){
             case IR_DARK_PINK: color.DARK_PINK; break;
             case IR_PINK: color.PINK; break;
             case IR_PURPLE: color.PURPLE; break;
-            case IR_BRIGHT_UP: effect.increaseBrightness(color); inputCommand = 0; break;
-            case IR_BRIGHT_DOWN: effect.decreaseBrightness(color); inputCommand = 0; break;
+            case IR_BRIGHT_UP: effect.increaseBrightness(color); inputCommand = IR_ON; break;
+            case IR_BRIGHT_DOWN: effect.decreaseBrightness(color); inputCommand = IR_ON; break;
             case IR_OFF: controller.turnOff(); controller.setLED(color); break;
             case IR_ON: controller.turnOn(); controller.setLED(color); break;
             case IR_STROBE: effect.flash(color, delayTime*1.5); break;
