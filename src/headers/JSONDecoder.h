@@ -6,6 +6,8 @@
 #define JSON_BUFFER 320
 #define DATA_BUFFER 315
 
+namespace ArduinoRGB{
+
 class JSONDecoder {
 private:
     unsigned char red;
@@ -31,4 +33,5 @@ public:
     bool hasDelay(void);
 public:
     static bool beatsEnabled;
+};
 };

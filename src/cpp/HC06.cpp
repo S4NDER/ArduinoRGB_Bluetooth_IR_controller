@@ -1,4 +1,6 @@
-#include "HC06.h"
+#include "../headers/HC06.h"
+
+namespace ArduinoRGB{
 
 HC06::HC06 (void){
     init();
@@ -36,3 +38,4 @@ if(Serial.available()){
 }
 return input;
 }
+};

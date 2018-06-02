@@ -1,6 +1,7 @@
-#include "CommandProcessor.h"
+#include "../headers/CommandProcessor.h"
 #include "Arduino.h"
 
+namespace ArduinoRGB{
 CommandProcessor::CommandProcessor (void){
     controller.setLED(color);
     effect.setController(controller);
@@ -19,12 +20,12 @@ void CommandProcessor::setDelay(unsigned short int delayTime){
 }
 
 void CommandProcessor::bassFlicker(void){
-    if (controller.getPowerState()) {
+    if (controller.powerSwitch.getState()) {
         effect.flash(color, 25);
     }
 }
 void CommandProcessor::processCommand (void){
-    if ((controller.getPowerState()) || (inputCommand == IR_ON)) {
+    if ((controller.powerSwitch.getState()) || (inputCommand == IR_ON)) {
         switch (inputCommand) {
             case IR_WHITE: color.WHITE; break;
             case IR_RED: color.RED; break;
@@ -42,10 +43,22 @@ void CommandProcessor::processCommand (void){
             case IR_DARK_PINK: color.DARK_PINK; break;
             case IR_PINK: color.PINK; break;
             case IR_PURPLE: color.PURPLE; break;
+<<<<<<< HEAD:CommandProcessor.cpp
             case IR_BRIGHT_UP: effect.increaseBrightness(color); inputCommand = IR_ON; break;
             case IR_BRIGHT_DOWN: effect.decreaseBrightness(color); inputCommand = IR_ON; break;
             case IR_OFF: controller.turnOff(); controller.setLED(color); break;
             case IR_ON: controller.turnOn(); controller.setLED(color); break;
+=======
+        }
+        effect.normalizeToColor(prevColor, color, 1);
+
+
+        switch (inputCommand){
+            case IR_BRIGHT_UP: effect.increaseBrightness(color); inputCommand = 0; break;
+            case IR_BRIGHT_DOWN: effect.decreaseBrightness(color); inputCommand = 0; break;
+            case IR_OFF: controller.powerSwitch.OFF; controller.setLED(color); break;
+            case IR_ON: controller.powerSwitch.ON; controller.setLED(color); break;
+>>>>>>> 00826316c27c358d3fb4b8e10a438f83a7edbc62:src/cpp/CommandProcessor.cpp
             case IR_STROBE: effect.flash(color, delayTime*1.5); break;
             case IR_FLASH:
             switch (flashCounter) {
@@ -153,5 +166,7 @@ void CommandProcessor::processCommand (void){
             flashCounter = 0;
         }
         controller.setLED(color);
+        prevColor = color;
     }
 }
+};

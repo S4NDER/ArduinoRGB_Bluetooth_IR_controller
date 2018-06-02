@@ -1,5 +1,6 @@
-#include "JSONDecoder.h"
+#include "../headers/JSONDecoder.h"
 
+namespace ArduinoRGB{
 bool JSONDecoder::beatsEnabled = false;
 
 JSONDecoder::JSONDecoder (void){
@@ -91,3 +92,4 @@ bool JSONDecoder::hasRGBInput (void){
 bool JSONDecoder::hasDelay(void){
     return isDelay;
 }
+};
